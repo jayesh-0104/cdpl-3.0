@@ -1,0 +1,33 @@
+Category Counts:
+manualSoftwareTestingQuestions: 15
+apiTestingPostmanQuestions: 15
+dbmsMysqlQuestions: 15
+etlTestingQuestions: 15
+advancedAutomationTestingQuestions: 15
+pythonProgrammingQuestions: 158
+javaProgrammingQuestions: 26
+advancedDataScienceMasterclassQuestions: 15
+machineLearningDataScienceHeroQuestions: 15
+deepLearningNlpGenAiQuestions: 15
+dataVisualizationRQuestions: 150
+advancedDataAnalyticsBiQuestions: 15
+dataAnalyticsTableauQuestions: 102
+dataAnalyticsPowerBiQuestions: 150
+dataAnalyticsBigDataEngQuestions: 15
+comprehensiveDataScienceAiQuestions: 15
+promptEngineeringGenAiQuestions: 25
+aiDrivenDigitalMarketingQuestions: 15
+digitalMarketingBusinessAiQuestions: 15
+advancedSoftwareTestingQuestions: 15
+advancedManualAutomationQuestions: 15
+pythonDataScienceQuestions: 15
+mlPythonQuestions: 150
+dataAnalyticsPythonQuestions: 150
+excelDataAnalyticsQuestions: 150
+digitalMarketingAiBootcampQuestions: 10
+aaaAdvancedSoftwareTestingQuestions: 10
+aaaAutomationTestingQuestions: 10
+aaaDataScienceQuestions: 10
+aaaDataEngineeringQuestions: 10
+
+Total Questions: 1351

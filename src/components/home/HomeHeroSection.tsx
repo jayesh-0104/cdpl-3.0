@@ -441,7 +441,7 @@ const HomeHeroSection: React.FC = () => {
       transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1.0] as const }}
       className="order-2 lg:order-2 lg:col-span-5"
     >
-      <div className="sticky top-4 max-w-sm ml-auto">
+      <div className="sticky top-4 max-w-sm mx-auto lg:ml-auto lg:mr-0">
         <div className="bg-white/92 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200 p-6 sm:p-8">
           {/* Form Header - Catchy and Actionable */}
           <div className="mb-6">
@@ -648,7 +648,7 @@ const HomeHeroSection: React.FC = () => {
         }
       `}</style>
 
-      <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50 lg:py-4 py-4 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50 lg:py-4 py-4 overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Animated gradient orbs */}
@@ -679,7 +679,7 @@ const HomeHeroSection: React.FC = () => {
         </div>
 
         {/* Main Container */}
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* --- Mobile Layout (lg:hidden) --- */}
           <div className="lg:hidden">

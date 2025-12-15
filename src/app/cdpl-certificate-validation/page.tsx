@@ -14,14 +14,24 @@ function SectionLoader({ label = "Loading..." }: { label?: string }) {
 }
 
 /* ---------- Dynamic sections (client components) ---------- */
-const CertificationValidationHeroSection = dynamic(
-  () => import("@/components/sections/CertificationValidationHeroSection"),
-  { ssr: true, loading: () => <SectionLoader label="Loading hero..." /> }
+const CertificationBreadcrumb = dynamic(
+  () => import("@/components/sections/CertificationBreadcrumb"),
+  { ssr: true, loading: () => <SectionLoader label="Loading breadcrumb..." /> }
 );
 
 const CertificationValidatorSection = dynamic(
   () => import("@/components/sections/CertificationValidatorSection"),
   { ssr: true, loading: () => <SectionLoader label="Loading validator..." /> }
+);
+
+const CertificationFeaturesSection = dynamic(
+  () => import("@/components/sections/CertificationFeaturesSection"),
+  { ssr: true, loading: () => <SectionLoader label="Loading features..." /> }
+);
+
+const CertificationSampleSection = dynamic(
+  () => import("@/components/sections/CertificationSampleSection"),
+  { ssr: true, loading: () => <SectionLoader label="Loading showcase..." /> }
 );
 
 /* ---------- SEO ---------- */
@@ -78,8 +88,10 @@ export default function CertificateValidationPage() {
       <meta itemProp="url" content="https://www.cinutedigital.com/cdpl-certificate-validation" />
       <meta itemProp="applicationCategory" content="BusinessApplication" />
 
-      <CertificationValidationHeroSection />
+      <CertificationBreadcrumb />
       <CertificationValidatorSection />
+      <CertificationSampleSection />
+      <CertificationFeaturesSection />
     </main>
   );
 }

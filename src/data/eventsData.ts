@@ -1413,7 +1413,7 @@ export const pastEvents: PastEvent[] = [
     id: "industrial-visit-viva-institute-of-technology",
     ...CDPL_BASE,  // Assuming this spreads shared base properties from the original template
     slug: "industrial-visit-viva-institute-of-technology",
-    title: "Industrial Visit by VIVA Institute of Technology, Virar – Cinute Digital Pvt. Ltd",
+    title: "Industrial Visit by VIVA Institute of Technology (2023) – Cinute Digital Pvt. Ltd",
     subtitle: "by Cinute Digital Pvt. Ltd",
     date: "2023-02-04",
     location: "MiraRoad East",
@@ -2006,7 +2006,7 @@ export const pastEvents: PastEvent[] = [
     id: "industrial-visit-by-viva-institute-of-technology-virar",
     ...CDPL_BASE,  // Assuming this spreads shared base properties from the original template
     slug: "industrial-visit-by-viva-institute-of-technology-virar",
-    title: "Industrial Visit by VIVA Institute of Technology, Virar – Cinute Digital Pvt. Ltd",
+    title: "Industrial Visit by VIVA Institute of Technology (2024) – Cinute Digital Pvt. Ltd",
     subtitle: "by Cinute Digital Pvt. Ltd",
     date: "2024-03-28 @ 10:00 AM",
     location: "MiraRoad East",

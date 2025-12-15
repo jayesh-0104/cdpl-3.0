@@ -7,7 +7,6 @@ import { MockCourse } from "@/data/mockTestData";
 import TestInterface from "@/components/mock-test/TestInterface";
 import ResultView from "@/components/mock-test/ResultView";
 import { RegistrationData } from "@/components/mock-test/RegistrationModal";
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 interface PageProps {
@@ -44,14 +43,32 @@ export default function MockTestPage({ params }: PageProps) {
                 // Handle 404
                 return;
             }
-            setCourse(c);
+
+            // Shuffle and select 20 questions
+            // We create a new object to avoid mutating the original data source
+            const shuffledQuestions = shuffleArray([...c.questions]);
+            const selectedQuestions = shuffledQuestions.slice(0, 30);
+
+            setCourse({ ...c, questions: selectedQuestions });
 
             // Fetch related
-            getRelatedCourses(c.categoryId, c.id).then(setRelatedCourses);
+            getRelatedCourses(c.categoryId, c.id).then(related => {
+                setRelatedCourses([c, ...related]);
+            });
 
             setLoading(false);
         });
     }, [courseSlug, router]);
+
+    // Fisher-Yates Shuffle Algorithm
+    const shuffleArray = <T,>(array: T[]): T[] => {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    };
 
     const handleSubmit = async (answers: Record<string, number>) => {
         if (!course || !user) return;

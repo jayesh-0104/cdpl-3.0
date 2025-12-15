@@ -31,7 +31,7 @@ const CourseCategoryCard = ({ category, onCourseClick }: CourseCategoryCardProps
                         <button
                             key={course.id}
                             onClick={() => onCourseClick(course)}
-                            className="w-full flex items-center justify-between p-3.5 rounded-xl bg-white border border-gray-100 hover:border-brand/30 hover:bg-orange-50/50 transition-all duration-300 group/item text-left shadow-sm hover:shadow-md"
+                            className="w-full flex items-center justify-between hover:cursor-pointer p-3.5 rounded-xl bg-white border border-gray-100 hover:border-brand/30 hover:bg-orange-50/50 transition-all duration-300 group/item text-left shadow-sm hover:shadow-md"
                         >
                             <div className="flex-1 pr-4">
                                 <h4 className="font-semibold text-gray-800 text-sm group-hover/item:text-brand transition-colors mb-0.5 line-clamp-1">

@@ -12,7 +12,7 @@ interface ResultViewProps {
 
 const ResultView = ({ score, totalQuestions, relatedCourses }: ResultViewProps) => {
     const percentage = Math.round((score / totalQuestions) * 100);
-    const passed = percentage >= 60;
+    const passed = percentage >= 75;
     const [animatedScore, setAnimatedScore] = useState(0);
 
     // Circle config
@@ -52,7 +52,7 @@ const ResultView = ({ score, totalQuestions, relatedCourses }: ResultViewProps) 
                 <div className="relative bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
 
                     {/* Background decorations */}
-                    <div className={`absolute top-0 w-full h-2 ${passed ? 'bg-gradient-to-r from-emerald-400 to-emerald-600' : 'bg-gradient-to-r from-orange-400 to-orange-600'}`} />
+                    <div className={`absolute top-0 w-full h-2 ${passed ? 'bg-gradient-to-r from-emerald-400 to-emerald-600' : 'bg-gradient-to-r from-red-500 to-red-700'}`} />
                     <div className="absolute top-[-10%] right-[-5%] w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
                     <div className="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -64,7 +64,7 @@ const ResultView = ({ score, totalQuestions, relatedCourses }: ResultViewProps) 
                             {/* Circular Progress */}
                             <div className="relative w-64 h-64 flex items-center justify-center mb-8">
                                 {/* Outer Glow */}
-                                <div className={`absolute inset-0 rounded-full blur-2xl opacity-20 ${passed ? 'bg-emerald-500' : 'bg-orange-500'}`} />
+                                <div className={`absolute inset-0 rounded-full blur-2xl opacity-20 ${passed ? 'bg-emerald-500' : 'bg-red-500'}`} />
 
                                 <svg className="w-full h-full transform -rotate-90">
                                     {/* Track */}
@@ -88,7 +88,7 @@ const ResultView = ({ score, totalQuestions, relatedCourses }: ResultViewProps) 
                                         strokeDasharray={circumference}
                                         strokeDashoffset={strokeDashoffset}
                                         strokeLinecap="round"
-                                        className={`transition-all duration-300 ${passed ? 'text-emerald-500' : 'text-orange-500'}`}
+                                        className={`transition-all duration-300 ${passed ? 'text-emerald-500' : 'text-red-500'}`}
                                     />
                                 </svg>
 
@@ -101,9 +101,9 @@ const ResultView = ({ score, totalQuestions, relatedCourses }: ResultViewProps) 
                             </div>
 
                             {/* Status Badge */}
-                            <div className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider flex items-center gap-2 shadow-lg mb-6 ${passed ? 'bg-emerald-100 text-emerald-700 shadow-emerald-200' : 'bg-orange-100 text-orange-700 shadow-orange-200'}`}>
+                            <div className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider flex items-center gap-2 shadow-lg mb-6 ${passed ? 'bg-emerald-100 text-emerald-700 shadow-emerald-200' : 'bg-red-100 text-red-700 shadow-red-200'}`}>
                                 {passed ? <Trophy className="w-4 h-4" /> : <Target className="w-4 h-4" />}
-                                {passed ? "PASSED" : "NEEDS IMPROVEMENT"}
+                                {passed ? "PASSED" : "FAILED"}
                             </div>
 
                             <p className="text-gray-500 text-center text-sm font-medium">

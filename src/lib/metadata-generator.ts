@@ -293,7 +293,6 @@ export function generateEventMetadata(input: {
   image?: string;
   keywords?: string[];
 }): Metadata {
-  const title = `${input.title} - ${input.category} | CDPL`;
 
   const keywords = [
     ...(input.keywords || []),

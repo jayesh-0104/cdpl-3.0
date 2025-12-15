@@ -21,7 +21,7 @@ export async function POST(req: Request) {
             }
         });
 
-        const totalQuestions = course.questions.length;
+        const totalQuestions = 30;
         const percentage = Math.round((score / totalQuestions) * 100);
 
         // Featured Text Logic

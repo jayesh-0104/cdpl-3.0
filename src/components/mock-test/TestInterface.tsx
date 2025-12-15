@@ -109,7 +109,7 @@ const TestInterface = ({ questions, courseName, onSubmit, isSubmitting }: TestIn
                     {/* Left Scroll Button */}
                     <button
                         onClick={() => handleScroll('left')}
-                        className="p-2 rounded-lg bg-white border border-gray-200 shadow-sm text-gray-400 hover:text-brand hover:border-brand transition-all flex-shrink-0"
+                        className="p-2 rounded-lg bg-white cursor-pointer border border-gray-200 shadow-sm text-gray-400 hover:text-brand hover:border-brand transition-all flex-shrink-0"
                     >
                         <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -131,7 +131,7 @@ const TestInterface = ({ questions, courseName, onSubmit, isSubmitting }: TestIn
                                 <button
                                     key={q.id}
                                     onClick={() => handleJumpToQuestion(idx)}
-                                    className={`flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold transition-all duration-300 ${isCurrent
+                                    className={`flex-shrink-0 w-8 h-8 cursor-pointer rounded-xl flex items-center justify-center text-sm font-bold transition-all duration-300 ${isCurrent
                                         ? 'bg-brand text-white shadow-lg scale-105 ring-2 ring-gray-100'
                                         : isAnswered
                                             ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
@@ -147,7 +147,7 @@ const TestInterface = ({ questions, courseName, onSubmit, isSubmitting }: TestIn
                     {/* Right Scroll Button */}
                     <button
                         onClick={() => handleScroll('right')}
-                        className="p-2 rounded-lg bg-white border border-gray-200 shadow-sm text-gray-400 hover:text-brand hover:border-brand transition-all flex-shrink-0"
+                        className="p-2 rounded-lg bg-white cursor-pointer border border-gray-200 shadow-sm text-gray-400 hover:text-brand hover:border-brand transition-all flex-shrink-0"
                     >
                         <ChevronRight className="w-5 h-5" />
                     </button>
@@ -227,7 +227,7 @@ const TestInterface = ({ questions, courseName, onSubmit, isSubmitting }: TestIn
                                     <button
                                         key={idx}
                                         onClick={() => handleOptionSelect(currentQuestion.id, idx)}
-                                        className={`group relative text-left p-3 rounded-2xl transition-all duration-300 border-2 ${isSelected
+                                        className={`group relative text-left p-3 cursor-pointer rounded-2xl transition-all duration-300 border-2 ${isSelected
                                             ? 'bg-white border-brand shadow-xl shadow-brand/10 translate-x-2'
                                             : 'bg-white border-transparent shadow-sm hover:border-gray-200 hover:shadow-md hover:translate-x-1'
                                             }`}
@@ -261,7 +261,7 @@ const TestInterface = ({ questions, courseName, onSubmit, isSubmitting }: TestIn
                         <button
                             onClick={handlePrevious}
                             disabled={isFirstQuestion}
-                            className={`px-4 sm:px-6 py-3 rounded-xl font-bold text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-all flex items-center gap-2 ${isFirstQuestion ? 'opacity-0 pointer-events-none' : ''
+                            className={`px-4 sm:px-6 py-3 cursor-pointer rounded-xl font-bold text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-all flex items-center gap-2 ${isFirstQuestion ? 'opacity-0 pointer-events-none' : ''
                                 }`}
                         >
                             <ChevronLeft className="w-5 h-5" /> <span className="hidden sm:inline">Previous</span><span className="sm:hidden">Prev</span>
@@ -270,7 +270,7 @@ const TestInterface = ({ questions, courseName, onSubmit, isSubmitting }: TestIn
                         {!isLastQuestion ? (
                             <button
                                 onClick={handleNext}
-                                className="bg-gray-900 text-white px-5 sm:px-8 py-3 rounded-xl font-bold shadow-lg shadow-gray-900/20 hover:bg-black hover:transform hover:-translate-y-0.5 transition-all flex items-center gap-2"
+                                className="bg-gray-900 text-white px-5 sm:px-8 py-3 cursor-pointer rounded-xl font-bold shadow-lg shadow-gray-900/20 hover:bg-black hover:transform hover:-translate-y-0.5 transition-all flex items-center gap-2"
                             >
                                 <span className="hidden sm:inline">Next</span><span className="sm:hidden">Next</span> <ChevronRight className="w-5 h-5" />
                             </button>
@@ -278,7 +278,7 @@ const TestInterface = ({ questions, courseName, onSubmit, isSubmitting }: TestIn
                             <button
                                 onClick={handleComplete}
                                 disabled={isSubmitting}
-                                className="relative bg-brand text-white px-6 sm:px-10 py-3 rounded-xl font-bold shadow-lg shadow-brand/30 hover:bg-orange-600 hover:transform hover:-translate-y-0.5 transition-all flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed group/btn"
+                                className="relative bg-brand text-white px-6 sm:px-10 py-3 cursor-pointer rounded-xl font-bold shadow-lg shadow-brand/30 hover:bg-orange-600 hover:transform hover:-translate-y-0.5 transition-all flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed group/btn"
                             >
                                 {isSubmitting ? 'Finishing...' : 'Complete Test'}
                                 {showWarning && (
