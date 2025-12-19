@@ -133,7 +133,7 @@ export default function CurriculumSection() {
               <article
                 tabIndex={0}
                 className={[
-                  "group relative overflow-hidden rounded-2xl border p-5 md:p-6 shadow-sm backdrop-blur transition-all duration-200",
+                  "group relative overflow-hidden rounded-2xl border p-5 md:p-6 shadow-sm backdrop-blur transition-all duration-200 h-full flex flex-col",
                   "hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:-translate-y-0.5",
                   m.accent.bg,
                   m.accent.border,
@@ -166,7 +166,7 @@ export default function CurriculumSection() {
                 </div>
 
                 {/* Footer chips */}
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-auto pt-4 flex flex-wrap gap-2">
                   <span className="rounded-md bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 ring-1 ring-black/5">
                     Hands-On Lab
                   </span>

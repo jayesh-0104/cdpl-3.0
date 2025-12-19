@@ -693,7 +693,7 @@ const HomeHeroSection: React.FC = () => {
               transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1.0] as const, delay: 0.06 }}
               className="mt-2 py-1 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl"
             >
-              Master <span className="block mt-1 text-brand">Software Testing</span> & <span className="text-brand">Data Science</span>
+              Master <span className="text-brand">Software Testing</span> & <span className="text-brand">Data Science</span>
             </motion.h1>
 
             {/* 3. Description */}

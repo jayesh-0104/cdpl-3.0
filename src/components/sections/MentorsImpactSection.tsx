@@ -76,12 +76,11 @@ const IMG_TWEAKS: MentorCardTweak = {
 };
 
 const DOMAINS = [
-  "AI / Machine Learning",
+  "Software Testing",
   "Data Science",
-  "Full-Stack",
-  "Cloud & DevOps",
-  "Product Management",
-  "UI/UX Design",
+  "Business Intelligence",
+  "Artificial Intelligence",
+  "Digital Marketing",
 ];
 
 export default function MentorsImpactSection() {

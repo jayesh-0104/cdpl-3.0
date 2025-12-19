@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Received - CDPL</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .header {
+            background-color: #ff8c00;
+            padding: 30px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .content {
+            padding: 30px;
+            color: #1e293b;
+        }
+
+        .content p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .cta-section {
+            background-color: #fff7ed;
+            border: 1px solid #ffedd5;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .cta-section h3 {
+            margin-top: 0;
+            color: #9a3412;
+            font-size: 18px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ff8c00;
+            color: #ffffff !important;
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 15px;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px -1px rgba(255, 140, 0, 0.2);
+            transition: all 0.2s;
+        }
+
+        .footer {
+            background-color: #f1f5f9;
+            padding: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .highlight {
+            color: #ff8c00;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Application Received!</h1>
+        </div>
+        <div class="content">
+            <p>Hi {{fullName}},</p>
+            <p>Thank you for applying for the <span class="highlight">{{position}}</span> position at Cinute Digital Pvt
+                Ltd (CDPL).</p>
+            <p>We've received your application and resume. Our hiring team will review your profile and if there's a
+                match, we'll reach out to you within 1-2 weeks.</p>
+
+            <div class="cta-section">
+                <h3>Want to upskill while you wait?</h3>
+                <p>Check out our industry-leading courses in Data Science, AI, and Software Testing to stay ahead of the
+                    curve.</p>
+                <a href="https://www.cinutedigital.com/courses" class="cta-button">Explore Our Courses</a>
+            </div>
+
+            <p style="margin-top: 30px;">Best regards,<br>The CDPL Careers Team</p>
+        </div>
+        <div class="footer">
+            &copy; {{currentYear}} Cinute Digital Pvt Ltd. All rights reserved.<br>
+            Office #1, 2nd Floor, Ashley Tower, Kanakia Road, Vagad Nagar, Beverly Park, Mira Road, Mumbai 401107
+        </div>
+    </div>
+</body>
+
+</html>

@@ -209,7 +209,7 @@ export default async function AffiliateProgramPage() {
       <AffiliateHeroSection />
 
       <section className="w-full">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <AffiliateBenefitsSection />
         </div>
       </section>
@@ -217,32 +217,28 @@ export default async function AffiliateProgramPage() {
       {/* New SEO Content Section */}
       <AffiliateContentSection />
 
-      <section className="w-full" id="how-it-works">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <AffiliateHowItWorksSection />
-        </div>
-      </section>
+      <AffiliateHowItWorksSection />
 
       <section className="w-full" id="tiers">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
           <AffiliateTiersSection />
         </div>
       </section>
 
       <section className="w-full" id="payouts">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
           <AffiliatePayoutsSection />
         </div>
       </section>
 
       <section className="w-full" id="faq">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
           <AffiliateFAQSection />
         </div>
       </section>
 
       <section className="w-full" id="apply">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
           <AffiliateCTASection />
         </div>
       </section>

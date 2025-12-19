@@ -359,6 +359,7 @@ export default function CareerSection() {
         isOpen={isSyllabusModalOpen}
         onClose={() => setIsSyllabusModalOpen(false)}
         courseName="Manual Testing"
+        source="Manual Testing Course - Career Section - Download Button"
       />
     </section>
   );

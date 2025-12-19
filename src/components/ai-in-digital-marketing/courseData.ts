@@ -868,7 +868,7 @@ export const courseData = {
     website: "www.cinutedigital.com",
     address: {
       headOffice:
-        "1, 2 & 3, 2nd Floor, Ashley Towers, Kanakia Rd, Vagad Nagar, Beverly Park, Mira Road East, Mira Bhayandar, Maharashtra 401107",
+        "Office #1, 2nd Floor, Ashley Tower, Kanakia Road, Vagad Nagar, Beverly Park, Mira Road, Mira Bhayandar, Mumbai, Maharashtra 401107",
       studyCenter:
         "SHOP NO 7, Laxmi palace, opposite Vidhyavardhini Degree Engineering College, Gurunanak Nagar, Vasai West, Maharashtra 401202",
     },

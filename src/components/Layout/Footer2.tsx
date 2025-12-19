@@ -40,8 +40,7 @@ const Footer: React.FC = () => {
                   <div className="flex items-start mt-1 gap-3">
                     <MapPin className="h-5 w-5 text-orange-500 mt-0.5" aria-hidden="true" />
                     <Link className="hover:text-brand transition" href="https://www.google.com/maps/place/Cinute+Digital+Pvt.+Ltd.+A+Premier+Software+Training+Institute+(CDPL)/@19.29342,72.8685471,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b1af2b2c5fed:0x7104f80b9fec8b9d!8m2!3d19.293415!4d72.871122!16s%2Fg%2F11t5q_mt87?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D">
-                      Office #1, 2nd Floor, Ashley Towers, Kanakia Rd, Vagad Nagar, Beverly Park,
-                      Mira Road East, Mira Bhayandar, Maharashtra 401107
+                      Office #1, 2nd Floor, Ashley Tower, Kanakia Road, Vagad Nagar, Beverly Park, Mira Road, Mira Bhayandar, Mumbai, Maharashtra 401107
                     </Link>
                   </div>
                 </div>
@@ -68,17 +67,17 @@ const Footer: React.FC = () => {
 
                 <div className="flex items-start gap-3">
                   <Phone className="h-5 w-5 text-orange-500 mt-0.5" aria-hidden="true" />
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                  <div className="flex flex-row flex-wrap items-center gap-2">
                     <Link
                       href="tel:+917888383788"
-                      className="hover:text-orange-600 transition-colors"
+                      className="hover:text-orange-600 transition-colors whitespace-nowrap"
                     >
                       +91 78883 83788
                     </Link>
-                    <span className="hidden sm:inline text-slate-300">|</span>
+                    <span className="text-slate-300 whitespace-nowrap">|</span>
                     <Link
                       href="tel:+918488988984"
-                      className="hover:text-orange-600 transition-colors"
+                      className="hover:text-orange-600 transition-colors whitespace-nowrap"
                     >
                       +91 84-889-889-84
                     </Link>
@@ -198,7 +197,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </footer >
   );
 };
 

@@ -22,6 +22,7 @@ interface WorkshopRequestModalProps {
     title?: string;
     subtitle?: string;
     serviceName?: string; // Optional, for service requests specially
+    interest?: string; // Optional, for mapping to admin templates
     variant?: 'workshop' | 'service' | 'general' | 'consultation' | 'event_contact' | 'affiliate';
 }
 
@@ -32,6 +33,7 @@ const WorkshopRequestModal = ({
     title = 'Request a Workshop',
     subtitle = 'Tell us about your requirements',
     serviceName,
+    interest: initialInterest,
     variant = 'workshop'
 }: WorkshopRequestModalProps) => {
     // Form state
@@ -121,6 +123,7 @@ const WorkshopRequestModal = ({
                                 variant === 'event_contact' ? 'event_contact' :
                                     variant === 'affiliate' ? 'affiliate' : 'workshop',
                     serviceName: serviceName || undefined,
+                    interest: initialInterest || (variant === 'workshop' ? formData.workshopType : undefined),
                     title
                 };
 

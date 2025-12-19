@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { CareerRole, HiringCompany } from "./types";
-import { Briefcase, DollarSign, Target, TrendingUp, Users } from "lucide-react";
+import { Briefcase, Target, TrendingUp, Users } from "lucide-react";
 import CareerSessionModal from "../CareerSessionModal";
 
 const careerRoles: CareerRole[] = [
@@ -10,21 +10,21 @@ const careerRoles: CareerRole[] = [
     id: 1,
     title: "Business Intelligence Analyst",
     description: "Focus on reporting, dashboards, and data-driven strategy.",
-    salaryRange: "₹ 6L - ₹ 15L",
+    salaryRange: "₹6 L - ₹15 L",
   },
   {
     id: 2,
     title: "Data Analyst",
     description:
       "Focus on statistical analysis, insight generation, and data storytelling.",
-    salaryRange: "₹ 5L - ₹ 12L",
+    salaryRange: "₹5 L - ₹12 L",
   },
   {
     id: 3,
     title: "Big Data Engineer",
     description:
       "Focus on building and maintaining scalable data pipelines and infrastructure.",
-    salaryRange: "₹ 8L - ₹ 25L+",
+    salaryRange: "₹8 L - ₹25 L+",
   },
 ];
 
@@ -98,7 +98,6 @@ const CareerSection: React.FC = () => {
                     Expected Salary Range (India)
                   </p>
                   <p className="text-lg font-bold text-teal-600 inline-flex items-center justify-center gap-1">
-                    <DollarSign className="h-4 w-4" />
                     {role.salaryRange}
                   </p>
                 </div>
@@ -170,7 +169,7 @@ const CareerSection: React.FC = () => {
                 {/* Placeholder for Company Logo (using name for now) */}
                 <div>
                   <p className="font-bold text-slate-900">{company.name}</p>
-                  <p className="text-xs text-slate-500 mt-1">Active Hiring</p>
+                  {/* <p className="text-xs text-slate-500 mt-1">Active Hiring</p> */}
                 </div>
               </div>
             ))}

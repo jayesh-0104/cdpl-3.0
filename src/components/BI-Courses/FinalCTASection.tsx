@@ -62,6 +62,8 @@ const FinalCTASection: React.FC<CTASectionProps> = () => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isBrochureOpen, setIsBrochureOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleEnrollSubmit = (enroll: EnrollFormData) => {
         // Replace with real submit logic as needed
@@ -77,13 +79,34 @@ const FinalCTASection: React.FC<CTASectionProps> = () => {
         phone: "",
     });
 
-    const onSubmit = (e: React.FormEvent) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Replace with real submit logic (API call) as needed
-        alert(
-            `Consultation Request:\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}`
-        );
-        // optionally clear form: setForm({ name: "", email: "", phone: "" });
+        setIsSubmitting(true);
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fullName: form.name,
+                    email: form.email,
+                    phone: form.phone,
+                    type: 'Course Category Enquiry',
+                    source: 'Business Intelligence - Final Cta - Right Section form',
+                }),
+            });
+
+            if (response.ok) {
+                setIsSubmitted(true);
+                setForm({ name: "", email: "", phone: "" });
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('Something went wrong. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -230,77 +253,102 @@ const FinalCTASection: React.FC<CTASectionProps> = () => {
                     {/* RIGHT: Consultation Form */}
                     <motion.div variants={itemVariants} className="lg:col-span-5">
                         <div className="rounded-2xl border border-indigo-200 bg-gradient-to-r from-orange-200 to-orange-300 p-8 shadow-2xl max-w-md w-full lg:ml-auto">
-                            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">
-                                <Star className="h-4 w-4 fill-yellow-600 text-yellow-600" />
-                                <span className="text-xs font-semibold text-gray-600">Free Consultation</span>
-                            </div>
-
-                            <h3 className="text-2xl font-bold text-black">Get Expert Guidance</h3>
-                            <p className="mt-2 text-sm text-gray-600">
-                                Schedule a free consultation with our career counselors and discover the best learning path for you.
-                            </p>
-
-                            <form onSubmit={onSubmit} className="mt-6 space-y-4">
-                                <div>
-                                    <label htmlFor="cta-name" className="mb-1.5 block text-sm font-medium text-gray-600">
-                                        Your Name
-                                    </label>
-                                    <input
-                                        id="cta-name"
-                                        name="name"
-                                        type="text"
-                                        required
-                                        value={form.name}
-                                        onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                                        className="block w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-black placeholder-indigo-200 shadow-sm backdrop-blur-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
-                                        placeholder="Enter your name"
-                                    />
+                            {isSubmitted ? (
+                                <div className="flex flex-col items-center justify-center py-6 text-center animate-in fade-in zoom-in duration-300">
+                                    <div className="mb-4 rounded-full bg-white/40 p-3 backdrop-blur-sm shadow-sm">
+                                        <Check className="h-10 w-10 text-green-700" />
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-gray-900">Request Sent!</h3>
+                                    <p className="mt-3 text-sm font-medium text-gray-800">
+                                        Thank you for your interest. Our team will contact you shortly to schedule your consultation.
+                                    </p>
+                                    <button
+                                        onClick={() => setIsSubmitted(false)}
+                                        className="mt-6 text-sm font-bold text-indigo-700 hover:text-indigo-800 hover:underline"
+                                    >
+                                        Submit another response
+                                    </button>
                                 </div>
+                            ) : (
+                                <>
+                                    <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">
+                                        <Star className="h-4 w-4 fill-yellow-600 text-yellow-600" />
+                                        <span className="text-xs font-semibold text-gray-600">Free Consultation</span>
+                                    </div>
 
-                                <div>
-                                    <label htmlFor="cta-email" className="mb-1.5 block text-sm font-medium text-gray-600">
-                                        Your Email
-                                    </label>
-                                    <input
-                                        id="cta-email"
-                                        name="email"
-                                        type="email"
-                                        required
-                                        value={form.email}
-                                        onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                                        className="block w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-black placeholder-indigo-200 shadow-sm backdrop-blur-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
-                                        placeholder="you@example.com"
-                                    />
-                                </div>
+                                    <h3 className="text-2xl font-bold text-black">Get Expert Guidance</h3>
+                                    <p className="mt-2 text-sm text-gray-600">
+                                        Schedule a free consultation with our career counselors and discover the best learning path for you.
+                                    </p>
 
-                                <div>
-                                    <label htmlFor="cta-phone" className="mb-1.5 block text-sm font-medium text-gray-600">
-                                        Your Phone
-                                    </label>
-                                    <PhoneInput
-                                        defaultCountry="IN"
-                                        international
-                                        countryCallingCodeEditable={false}
-                                        value={form.phone}
-                                        onChange={(e) => setForm((f) => ({ ...f, phone: e || '' }))}
-                                        className="w-full [&>input]:w-full [&>input]:border-none [&>input]:outline-none [&>input]:py-3 [&>input]:px-3 [&>input]:rounded-lg [&>input]:bg-white backdrop-blur-sm overflow-hidden"
-                                        inputClass="!w-full !pl-14 !text-base !border-none !outline-none !ring-0"
-                                        containerClass="w-full"
-                                    />
-                                </div>
+                                    <form onSubmit={onSubmit} className="mt-6 space-y-4">
+                                        <div>
+                                            <label htmlFor="cta-name" className="mb-1.5 block text-sm font-medium text-gray-600">
+                                                Your Name
+                                            </label>
+                                            <input
+                                                id="cta-name"
+                                                name="name"
+                                                type="text"
+                                                required
+                                                value={form.name}
+                                                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                                                className="block w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-black placeholder-indigo-200 shadow-sm backdrop-blur-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
+                                                placeholder="Enter your name"
+                                            />
+                                        </div>
 
-                                <button
-                                    type="submit"
-                                    className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-white px-6 py-3.5 font-semibold text-indigo-600 shadow-lg transition hover:bg-indigo-50 hover:shadow-xl"
-                                >
-                                    Get Free Consultation
-                                    <ArrowRight className="ml-2 h-5 w-5" />
-                                </button>
+                                        <div>
+                                            <label htmlFor="cta-email" className="mb-1.5 block text-sm font-medium text-gray-600">
+                                                Your Email
+                                            </label>
+                                            <input
+                                                id="cta-email"
+                                                name="email"
+                                                type="email"
+                                                required
+                                                value={form.email}
+                                                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                                                className="block w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-black placeholder-indigo-200 shadow-sm backdrop-blur-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
+                                                placeholder="you@example.com"
+                                            />
+                                        </div>
 
-                                <p className="text-xs text-black">
-                                    By submitting, you agree to be contacted about courses and placements.
-                                </p>
-                            </form>
+                                        <div>
+                                            <label htmlFor="cta-phone" className="mb-1.5 block text-sm font-medium text-gray-600">
+                                                Your Phone
+                                            </label>
+                                            <PhoneInput
+                                                defaultCountry="IN"
+                                                international
+                                                countryCallingCodeEditable={false}
+                                                value={form.phone}
+                                                onChange={(e) => setForm((f) => ({ ...f, phone: e || '' }))}
+                                                className="w-full [&>input]:w-full [&>input]:border-none [&>input]:outline-none [&>input]:py-3 [&>input]:px-3 [&>input]:rounded-lg [&>input]:bg-white backdrop-blur-sm overflow-hidden"
+                                                inputClass="!w-full !pl-14 !text-base !border-none !outline-none !ring-0"
+                                                containerClass="w-full"
+                                            />
+                                        </div>
+
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-white px-6 py-3.5 font-semibold text-indigo-600 shadow-lg transition hover:bg-indigo-50 hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed"
+                                        >
+                                            {isSubmitting ? 'Submitting...' : (
+                                                <>
+                                                    Get Free Consultation
+                                                    <ArrowRight className="ml-2 h-5 w-5" />
+                                                </>
+                                            )}
+                                        </button>
+
+                                        <p className="text-xs text-black">
+                                            By submitting, you agree to be contacted about courses and placements.
+                                        </p>
+                                    </form>
+                                </>
+                            )}
                         </div>
                     </motion.div>
                 </motion.div>

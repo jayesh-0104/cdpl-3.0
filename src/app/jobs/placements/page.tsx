@@ -80,10 +80,10 @@ const PlacementsFAQSection = dynamic(
     () => import("@/components/sections/PlacementsFAQSection"),
     { ssr: true, loading: () => <SectionLoader label="Loading FAQs…" /> }
 );
-const PlacementsNewsletterCTASection = dynamic(
-    () => import("@/components/sections/PlacementsNewsletterCTASection"),
-    { ssr: true, loading: () => <SectionLoader label="Loading updates…" /> }
-);
+// const PlacementsNewsletterCTASection = dynamic(
+//     () => import("@/components/sections/PlacementsNewsletterCTASection"),
+//     { ssr: true, loading: () => <SectionLoader label="Loading updates…" /> }
+// );
 
 export default function PlacementsPage() {
 
@@ -189,9 +189,9 @@ export default function PlacementsPage() {
                     className="w-full pb-8 scroll-mt-[96px] md:scroll-mt-[104px] lg:scroll-mt-[112px]"
                     data-scroll-target="placements-newsletter"
                 >
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <PlacementsNewsletterCTASection />
-                    </div>
+                    </div> */}
                 </section>
 
                 {/* Data-attribute scroll manager (hash clicks + hash on load) */}

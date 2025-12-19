@@ -36,10 +36,10 @@ export const organizationSchema = {
   ],
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Office No. 101, ABC Towers", // Placeholder: Replace with actual address
-    "addressLocality": "Pune",
+    "streetAddress": "Office #1, 2nd Floor, Ashley Tower, Kanakia Road, Vagad Nagar, Beverly Park, Mira Road",
+    "addressLocality": "Mira Bhayandar, Mumbai",
     "addressRegion": "Maharashtra",
-    "postalCode": "411001", // Placeholder: Replace with actual postal code
+    "postalCode": "401107",
     "addressCountry": "IN"
   }
 };

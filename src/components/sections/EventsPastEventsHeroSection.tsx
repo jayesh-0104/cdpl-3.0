@@ -128,7 +128,7 @@ export default function EventsPastEventsHeroSection() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-[15px] leading-7 text-slate-700 sm:text-base md:text-lg">
-              Explore our portfolio of successfully conducted <strong>corporate training programs</strong>, <strong>technical workshops</strong>, and <strong>industry seminars</strong>. From <strong>Software Testing</strong> and <strong>Data Science</strong> to <strong>AI/ML</strong>, we empower organizations and professionals with job-ready skills and hands-on expertise.
+              Explore our portfolio of successfully conducted <strong>Corporate Training Programs</strong>, <strong>Technical Workshops</strong>, and <strong>Industry Seminars</strong>. From <strong>Software Testing</strong> and <strong>Data Science</strong> to <strong>AI/ML</strong>, we empower organizations and professionals with job-ready skills and hands-on expertise.
             </p>
 
             {/* Buttons */}
@@ -183,6 +183,7 @@ export default function EventsPastEventsHeroSection() {
         source="Events Past Events Hero Section"
         title="Corporate Training Enquiry"
         subtitle="Enquire about our corporate training programs and workshops."
+        interest="Corporate Training"
         variant="workshop"
       />
     </section>

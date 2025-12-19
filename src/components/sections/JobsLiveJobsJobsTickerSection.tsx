@@ -30,7 +30,7 @@ export function JobsLiveJobsJobsTickerSection({ jobs }: { jobs: Job[] }) {
                 "linear-gradient(90deg, rgba(14,165,233,.0), rgba(14,165,233,.35), rgba(14,165,233,.0))",
             }}
           />
-          <div className="animate-[marquee_22s_linear_infinite] whitespace-nowrap">
+          <div className="animate-[marquee_3s_linear_infinite] sm:animate-[marquee_22s_linear_infinite] whitespace-nowrap">
             {[...jobs, ...jobs].map((j, idx) => (
               <span key={j.id + idx} className="mx-4 inline-flex items-center gap-2">
                 <span className="rounded-md bg-amber-100 px-2 py-0.5 font-semibold text-amber-800">

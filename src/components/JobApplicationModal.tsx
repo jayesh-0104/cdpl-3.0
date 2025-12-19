@@ -48,6 +48,22 @@ export default function JobApplicationModal({
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
+            // Reset form state when modal opens
+            setIsSuccess(false);
+            setError(null);
+            setIsSubmitting(false);
+            setResumeFile(null);
+            setFormData({
+                fullName: "",
+                email: "",
+                phone: "",
+                location: "",
+                skills: "",
+                experienceLevel: "",
+                currentCtc: "",
+                expectedCtc: "",
+                noticePeriod: "",
+            });
         } else {
             document.body.style.overflow = "unset";
         }
@@ -106,6 +122,7 @@ export default function JobApplicationModal({
             data.append("expectedCtc", formData.expectedCtc);
             data.append("noticePeriod", formData.noticePeriod); // Dropdown
             data.append("resume", resumeFile);
+            data.append("source", "Jobs - Careers - Open role");
 
             const response = await fetch("/api/apply", {
                 method: "POST",

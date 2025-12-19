@@ -58,33 +58,19 @@ export async function submitIstqbStep1(formData: FormData) {
         type: 'ISTQB Step 1'
     };
 
-    // Reuse validation or simplified template logic
-    // We'll use admin-notification-basic.html but with injected details in the message/interest fields if possible,
-    // or just rely on the 'message' field which basic template usually supports.
-    // Actually, let's use a specific subject to make it clear.
-
-    const adminSubject = `[ISTQB STEP 1] New Registration from ${name}`;
-
-    // We can try to reuse 'admin-notification-basic.html' which expects { fullName, email, phone, source, year, ... }
-    // To include City and Job Title, we might need a template that supports dynamic fields or put them in 'message' if the template renders it.
-    // Checking previous analysis: admin-notification-basic.html renders 'message' if we pass it? 
-    // Wait, let's look at `admin-notification-basic.html` again. 
-    // It has a table. It doesn't seem to have a generic message block. 
-    // `admin-notification.html` DOES have a message block. Let's use that.
+    const adminSubject = `Initial Request from ${name}`;
 
     let adminHtml = '';
     try {
         adminHtml = await getTemplatedEmail('admin-notification.html', {
             ...adminData,
             year: currentYear.toString(),
-            // admin-notification.html expects: fullName, email, phone, source, type, interest, message
-            type: 'ISTQB Registration (Step 1)',
+            type: 'Initial Request',
             interest: certificationLevel,
-            message: `City: ${city}\nJob Title: ${jobTitle}\n\nUser has completed Step 1 and is proceeding to booking/exam selection.`
+            message: `City: ${city}\nJob Title: ${jobTitle}\n\nUser has completed Step 1 (Initial Request).`
         });
     } catch (e) {
         console.error("Template error", e);
-        // Fallback if template fails
         adminHtml = `<p>New ISTQB Registration (Step 1)</p><p>Name: ${name}</p><p>Email: ${email}</p><p>Phone: ${phone}</p>`;
     }
 
@@ -126,13 +112,9 @@ export async function submitIstqbStep2(data: {
     action: 'book_meeting' | 'skip_exam';
     name: string;
     email: string;
-    phone: string; // Passed from step 1 state
-
-    // For Book Meeting
+    phone: string;
     meetingDate?: string;
     meetingTime?: string;
-
-    // For Exam Selection
     examDate?: string;
     certificationLevel?: string;
     amount?: string;
@@ -147,55 +129,91 @@ export async function submitIstqbStep2(data: {
     let type = '';
 
     if (action === 'book_meeting') {
-        subject = `[ISTQB STEP 2] Booking Request from ${name}`;
-        type = 'ISTQB Booking';
-        message = `User selected "Book a Meeting".\nProposed Date: ${meetingDate}\n\n(This meeting needs to be confirmed)`;
+        const userSubject = `Your ISTQB Consultation Meeting Link`;
+        const userHtml = `
+            <div style="font-family: sans-serif; padding: 20px;">
+                <h2>Hello ${name},</h2>
+                <p>Thank you for booking a consultation with us.</p>
+                <p>Please join the meeting using the link below at the scheduled time (${meetingDate}):</p>
+                <p>
+                    <a href="https://meet.google.com/jpg-ixdq-ohf" style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        Join Google Meet
+                    </a>
+                </p>
+                <p> Link: https://meet.google.com/jpg-ixdq-ohf </p>
+                <p>Regards,<br/>CDPL Team</p>
+            </div>
+        `;
+
+        await sendEmail({
+            from: SMTP_FROM_EMAIL,
+            to: email, // Send ONLY to User
+            subject: userSubject,
+            html: userHtml,
+        });
+
     } else {
+        // Exam Selection
         subject = `[ISTQB STEP 2] Exam Selection from ${name}`;
         type = 'ISTQB Exam Selection';
-        message = `User selected "Skip & Select Exam Date".\nRequested Exam Date: ${examDate}\nCertification Level: ${certificationLevel}\nAmount: ${amount}`;
+        message = `User selected "Choose Exam Date".\nRequested Exam Date: ${examDate}\nCertification Level: ${certificationLevel}\nAmount: ${amount}`;
 
         if (paymentId) {
             message += `\n\nTransaction ID: ${paymentId}`;
         }
+
+        const adminData = {
+            fullName: name,
+            email,
+            phone,
+            source,
+            year: currentYear.toString(),
+            type,
+            interest: certificationLevel || 'ISTQB Consultation',
+            message
+        };
+
+        const adminHtml = await getTemplatedEmail('admin-notification.html', adminData);
+
+        await sendEmail({
+            from: SMTP_FROM_EMAIL,
+            to: ADMIN_EMAIL,
+            cc: CC_EMAIL,
+            bcc: BCC_EMAIL,
+            subject,
+            html: adminHtml,
+        });
+
+        const userSubject = `ISTQB Exam Registration Confirmed`;
+        const userHtml = `
+            <div style="font-family: sans-serif; padding: 20px;">
+                <h2>Hello ${name},</h2>
+                <p>Thank you for registering for the ISTQB Exam.</p>
+                <p><strong>Exam Date:</strong> ${examDate}</p>
+                <p><strong>Certification Level:</strong> ${certificationLevel}</p>
+                <p><strong>Transaction ID:</strong> ${paymentId}</p>
+                <p>We will contact you shortly with further details.</p>
+                <p>Regards,<br/>CDPL Team</p>
+            </div>
+        `;
+
+        await sendEmail({
+            from: SMTP_FROM_EMAIL,
+            to: email,
+            subject: userSubject,
+            html: userHtml,
+        });
     }
 
-    // Admin Notification
-    const adminData = {
-        fullName: name,
-        email,
-        phone,
-        source,
-        year: currentYear.toString(),
-        type,
-        interest: certificationLevel || 'ISTQB Consultation',
-        message
-    };
-
-    const adminHtml = await getTemplatedEmail('admin-notification.html', adminData);
-
-    const adminMailOptions = {
-        from: SMTP_FROM_EMAIL,
-        to: ADMIN_EMAIL,
-        cc: CC_EMAIL,
-        bcc: BCC_EMAIL,
-        subject,
-        html: adminHtml,
-    };
-
-    await sendEmail(adminMailOptions);
-
-    // We check if we need to update TeleCRM/Sheets again? 
-    // Probably yes, to capture the final intent.
     appendRowToSheet({
         date: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
         fullName: name,
         email,
         phone,
         source,
-        type,
+        type: action === 'book_meeting' ? 'ISTQB Booking (User Only)' : type,
         interest: certificationLevel || 'Meeting',
-        message
+        message: action === 'book_meeting' ? `Meeting booked for ${meetingDate}` : message
     }).catch(e => console.error(e));
 
     return { success: true };

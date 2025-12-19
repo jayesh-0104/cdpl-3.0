@@ -336,8 +336,12 @@ const Footer = () => {
                   Web Development
                 </Link>
 
-                <Link href="/blog/category/ai-ml" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                <Link href="/blog/category/artificial-intelligence" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
                   AI &amp; Machine Learning
+                </Link>
+
+                <Link href="/blog/category/digital-marketing" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                  Digital Marketing
                 </Link>
               </li>
             </ul>

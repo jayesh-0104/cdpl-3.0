@@ -324116,9 +324116,9 @@ export const courseData: Record<string, CourseData> = {
         }
       ],
       "landmarks": [
-        "India Gate",
-        "Taj Mahal",
-        "Red Fort"
+        "Charminar",
+        "Chowmahalla Palace",
+        "Golconda Fort"
       ]
     },
     "courseOverviewContent": {

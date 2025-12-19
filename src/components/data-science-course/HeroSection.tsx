@@ -19,7 +19,7 @@ export default function HeroSection() {
 
   const breadcrumbs = [
     { label: "Home", href: "/" },
-    { label: "Data • AI", href: "#" },
+    { label: "Courses", href: "/courses" },
     { label: "Advanced DS & ML Masterclass", href: "/data-science-course" },
   ];
 

@@ -16,16 +16,9 @@ type Props = {
 export default function PlacementsNewsletterCTASection({ contained = false }: Props) {
     const [email, setEmail] = useState("");
 
-    const Wrapper = ({ children }: { children: React.ReactNode }) =>
-        contained ? (
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
-        ) : (
-            <>{children}</>
-        );
-
     return (
         <section className="w-full py-6 sm:py-8" aria-label="CDPL newsletter subscription">
-            <Wrapper>
+            <Wrapper contained={contained}>
                 <div
                     className={[
                         "rounded-3xl border border-gray-200/60 shadow-sm",
@@ -87,3 +80,10 @@ export default function PlacementsNewsletterCTASection({ contained = false }: Pr
         </section>
     );
 }
+
+const Wrapper = ({ contained, children }: { contained: boolean; children: React.ReactNode }) =>
+    contained ? (
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
+    ) : (
+        <>{children}</>
+    );

@@ -67,7 +67,7 @@ export default function AffiliateHowItWorksSection({
         <section
             id="how-it-works"
             aria-labelledby="how-heading"
-            className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"
+            className="relative mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 overflow-hidden"
             data-scroll-target="how-it-works"
         >
             <div className="mb-8">
@@ -79,7 +79,7 @@ export default function AffiliateHowItWorksSection({
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[420px_1fr]">
+            <div className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-[420px_1fr]">
                 {/* LEFT — illustration (blended; no borders/shadows) */}
                 <aside className="relative">
                     <div className="lg:sticky lg:top-28">
@@ -121,7 +121,7 @@ export default function AffiliateHowItWorksSection({
                 </aside>
 
                 {/* RIGHT — timeline (no borders, centered numbers, flat tints) */}
-                <div className="relative pl-12 sm:pl-16">
+                <div className="relative">
                     {/* Spine */}
                     <div
                         aria-hidden="true"
@@ -160,9 +160,9 @@ export default function AffiliateHowItWorksSection({
 
                                     {/* Connector (neutral, no gradient) */}
                                     <span
-                                        className="absolute left-5 top-1/2 -translate-y-1/2 sm:left-7"
+                                        className="absolute left-5 top-1/2 -translate-y-1/2 w-[2.25rem] sm:left-7 sm:w-[3.25rem]"
                                         aria-hidden="true"
-                                        style={{ display: "block", height: 1, width: "2.75rem", backgroundColor: "rgba(148,163,184,0.45)" }}
+                                        style={{ display: "block", height: 1, backgroundColor: "rgba(148,163,184,0.45)" }}
                                     />
 
                                     {/* Step pill — flat tint, no border */}
@@ -170,7 +170,7 @@ export default function AffiliateHowItWorksSection({
                                         whileHover={{ y: -2, scale: 1.01, boxShadow: `0 26px 60px -32px ${glow}` }}
                                         whileTap={{ scale: 0.995 }}
                                         transition={{ type: "spring", stiffness: 140, damping: 16 }}
-                                        className="ml-16 sm:ml-20 rounded-2xl px-5 py-4 shadow-[0_18px_40px_-24px_rgba(2,6,23,0.25)]"
+                                        className="ml-14 sm:ml-20 rounded-2xl px-4 py-3 sm:px-5 sm:py-4 shadow-[0_18px_40px_-24px_rgba(2,6,23,0.25)]"
                                         style={{ backgroundColor: tint }}
                                     >
                                         <div className="flex items-start gap-3">

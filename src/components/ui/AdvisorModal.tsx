@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, User, Mail, TrendingUp, CheckCircle2, Loader2 } from 'lucide-react';
 import PhoneInput from 'react-phone-number-input';
@@ -216,7 +217,7 @@ const AdvisorModal: React.FC<AdvisorModalProps> = ({
         };
     }, [isOpen, isSubmitting, handleClose]);
 
-    return (
+    const modalContent = (
         <>
             <style jsx global>{`
         .PhoneInputCountrySelect {
@@ -231,7 +232,7 @@ const AdvisorModal: React.FC<AdvisorModalProps> = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+                        className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
                         onClick={handleClose}
                     >
                         <motion.div
@@ -239,7 +240,7 @@ const AdvisorModal: React.FC<AdvisorModalProps> = ({
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] as const }}
-                            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+                            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden max-h-[90vh] overflow-y-auto"
                             onClick={(e) => e.stopPropagation()}
                         >
                             {/* Modal Header */}
@@ -404,6 +405,10 @@ const AdvisorModal: React.FC<AdvisorModalProps> = ({
             </AnimatePresence>
         </>
     );
+
+    if (typeof document === 'undefined') return null;
+
+    return createPortal(modalContent, document.body);
 };
 
 export default AdvisorModal;

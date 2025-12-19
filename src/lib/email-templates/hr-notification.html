@@ -5,57 +5,118 @@
     <meta charset="utf-8">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #1a1a1a;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 8px;
+            max-width: 650px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
         }
 
         .header {
-            background-color: #ff8c00;
+            background: linear-gradient(135deg, #ff8c00 0%, #ff5e00 100%);
             color: white;
-            padding: 15px;
-            border-radius: 8px 8px 0 0;
+            padding: 30px;
             text-align: center;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+            font-size: 16px;
         }
 
         .content {
+            padding: 35px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #6b7280;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: #f9fafb;
+            color: #4b5563;
+            font-size: 13px;
+            width: 40%;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .data-table td {
+            padding: 12px 15px;
+            color: #111827;
+            font-size: 14px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .highlight {
+            background-color: #fff7ed;
+            color: #c2410c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .resume-section {
+            background-color: #f3f4f6;
             padding: 20px;
-        }
-
-        .field {
-            margin-bottom: 10px;
-        }
-
-        .label {
-            font-weight: bold;
-            color: #555;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #888;
+            border-radius: 8px;
             text-align: center;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
+            margin-top: 25px;
         }
 
         .button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 25px;
             background-color: #ff8c00;
-            color: white;
+            color: white !important;
             text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .footer {
+            padding: 25px;
+            background-color: #f9fafb;
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+            border-top: 1px solid #e5e7eb;
         }
     </style>
 </head>
@@ -67,39 +128,67 @@
             <p>{{position}}</p>
         </div>
         <div class="content">
-            <p>Hello HR Team,</p>
-            <p>A new application has been received for the position of <strong>{{position}}</strong>.</p>
+            <div class="section-title">Candidate Personal Info</div>
+            <table class="data-table">
+                <tr>
+                    <th>Full Name</th>
+                    <td>{{fullName}}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><a href="mailto:{{email}}" style="color: #ff8c00; text-decoration: none;">{{email}}</a></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td>{{phone}}</td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>{{location}}</td>
+                </tr>
+            </table>
 
-            <h3>Candidate Details</h3>
+            <div class="section-title">Professional Details</div>
+            <table class="data-table">
+                <tr>
+                    <th>Experience Level</th>
+                    <td>{{experienceLevel}}</td>
+                </tr>
+                <tr>
+                    <th>Current CTC</th>
+                    <td>{{currentCtc}}</td>
+                </tr>
+                <tr>
+                    <th>Expected CTC</th>
+                    <td>{{expectedCtc}}</td>
+                </tr>
+                <tr>
+                    <th>Notice Period</th>
+                    <td>{{noticePeriod}}</td>
+                </tr>
+                <tr>
+                    <th>Metadata Source</th>
+                    <td><span class="highlight">{{source}}</span></td>
+                </tr>
+            </table>
 
-            <div class="field">
-                <span class="label">Full Name:</span> {{fullName}}
-            </div>
-            <div class="field">
-                <span class="label">Email:</span> <a href="mailto:{{email}}">{{email}}</a>
-            </div>
-            <div class="field">
-                <div class="field">
-                    <span class="label">Notice Period:</span> {{noticePeriod}}
-                </div>
+            <div class="section-title">Skills & Tools</div>
+            <p style="font-size: 14px; color: #374151;">{{skills}}</p>
 
-                <h3>Skills & Tools</h3>
-                <p>{{skills}}</p>
-
-                <h3>Resume</h3>
-                <p>
-                    <a href="{{resumeLink}}" class="button" target="_blank">View Resume</a>
+            <div class="resume-section">
+                <p style="margin-top: 0; font-size: 14px; font-weight: 600;">The resume is attached to this email.</p>
+                <a href="{{resumeLink}}" class="button" target="_blank">View Public Link</a>
+                <p style="font-size: 11px; color: #6b7280; margin-top: 10px;">
+                    Public link may expire or be inaccessible depending on server configuration. Use attachment for
+                    local review.
                 </p>
-                <p style="font-size: 12px; color: #666;">
-                    (If the button doesn't work, copy this link: {{resumeLink}})
-                </p>
-
-            </div>
-            <div class="footer">
-                <p>&copy; {{currentYear}} Cinute Digital Pvt Ltd. All rights reserved.</p>
-                <p>This is an automated notification.</p>
             </div>
         </div>
+        <div class="footer">
+            <p>&copy; {{currentYear}} Cinute Digital Pvt Ltd. All rights reserved.</p>
+            <p>This is an automated system notification.</p>
+        </div>
+    </div>
 </body>
 
 </html>

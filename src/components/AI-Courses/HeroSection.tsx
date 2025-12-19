@@ -318,7 +318,12 @@ export default function HeroSection(): React.JSX.Element {
                     {/* Form below heading on mobile */}
                     <div className="my-8">
                         <div className="bg-white p-5 rounded-xl shadow-lg border border-slate-100">
-                            <LeadForm title="Start Your Free Demo" subtitle="Chat with an expert advisor" showCourse={false} />
+                            <LeadForm
+                                title="Start Your Free Demo"
+                                subtitle="Chat with an expert advisor"
+                                showCourse={false}
+                                source="Artificial Intelligence - Hero Section - Mobile Form"
+                            />
                         </div>
                     </div>
 
@@ -348,6 +353,7 @@ export default function HeroSection(): React.JSX.Element {
                                         title="Start Your Free Demo"
                                         subtitle="Chat with an expert advisor & unlock a personalised learning plan"
                                         showCourse={false}
+                                        source="Artificial Intelligence - Hero Section - Right Form"
                                     />
                                 </div>
                             </motion.div>

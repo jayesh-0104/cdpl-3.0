@@ -180,19 +180,19 @@ const CityFooter = () => {
                                     Digital Marketing Course in Mumbai
                                 </Link>
 
-                                <Link href="/digital-marketing-courses-in-delhi" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                                <Link href="/digital-marketing-course-in-delhi" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
                                     Digital Marketing Course in delhi
                                 </Link>
 
-                                <Link href="/digital-marketing-courses-in-ahmedabad" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                                <Link href="/digital-marketing-course-in-ahmedabad" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
                                     Digital Marketing Course in Ahmedabad
                                 </Link>
 
-                                <Link href="/digital-marketing-courses-in-chennai" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                                <Link href="/digital-marketing-course-in-chennai" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
                                     Digital Marketing Course in Chennai
                                 </Link>
 
-                                <Link href="/digital-marketing-courses-in-bengaluru" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                                <Link href="/digital-marketing-course-in-bengaluru" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
                                     Digital Marketing Course in Bengaluru
                                 </Link>
 
@@ -200,11 +200,11 @@ const CityFooter = () => {
                                     Digital Marketing Course in Pune
                                 </Link>
 
-                                <Link href="/digital-marketing-courses-in-kolkata" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                                <Link href="/digital-marketing-course-in-kolkata" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
                                     Digital Marketing Course in Kolkata
                                 </Link>
 
-                                <Link href="/digital-marketing-courses-in-hyderabad" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
+                                <Link href="/digital-marketing-course-in-hyderabad" className="text-gray-300 hover:text-brand hover:translate-x-2 transition-all duration-300 ease-in-out text-sm">
                                     Digital Marketing Course in Hyderabad
                                 </Link>
                             </li>

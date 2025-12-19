@@ -206,11 +206,11 @@ export default function AffiliateHeroSection() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease }}
-              className="mt-6 flex items-center gap-3"
+              className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="group inline-flex items-center gap-2 rounded-xl px-5 py-3 font-semibold text-white shadow-sm ring-1 ring-black/5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-500 active:translate-y-[1px] cursor-pointer"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold text-white shadow-sm ring-1 ring-black/5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-500 active:translate-y-[1px] cursor-pointer sm:w-auto sm:justify-start"
                 style={{ backgroundColor: BRAND_COLOR }}
               >
                 Apply Now
@@ -218,7 +218,7 @@ export default function AffiliateHeroSection() {
               </button>
               <Link
                 href="#how-it-works"
-                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-slate-700 hover:bg-slate-50 cursor-pointer"
+                className="inline-flex w-full items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-slate-700 hover:bg-slate-50 cursor-pointer sm:w-auto"
               >
                 How it works
               </Link>
@@ -257,6 +257,6 @@ export default function AffiliateHeroSection() {
         subtitle="Join our partner ecosystem today"
         source="Website - Affiliate Hero"
       />
-    </section>
+    </section >
   );
 }

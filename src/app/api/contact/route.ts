@@ -76,7 +76,7 @@ export async function POST(request: Request) {
   console.log('API Contact Route Hit');
   try {
     const body = await request.json();
-    const { fullName, email, phone, type, source, interest, message, courseName, syllabusLink, company, jobTitle, workshopType, participants, preferredDate, title, interestedTrack, location } = body;
+    const { fullName, email, phone, type, source, interest, message, courseName, syllabusLink, company, workshopType, participants, title, interestedTrack, location } = body;
     console.log('Received payload:', { fullName, email, phone, type, source, workshopType, interestedTrack });
 
     const currentYear = new Date().getFullYear();
@@ -87,6 +87,7 @@ export async function POST(request: Request) {
       phone,
       source: source || 'Unknown',
       year: currentYear,
+      formTitle: title || 'New Lead Submission',
     };
 
 
@@ -116,6 +117,8 @@ export async function POST(request: Request) {
       else if (formSource === 'City Course Page - Hero Section') formSource = 'City Course Page - Hero Section';
       else formSource = 'Contact Form';
     }
+
+
 
     if (source === 'City Course Page - Hero Section') {
       // Force type for city course
@@ -162,6 +165,77 @@ export async function POST(request: Request) {
     const isMentorsPageRequest = formSource.includes('Mentors Page');
     const isSessionEnquiry = formSource.includes('Session Enquiry') || formSource.includes('Other Courses Section') || formSource.includes('Book Free Demo') || formSource.includes('Start Your QA Journey') || formSource.includes('Get Placement Support') || formSource.includes('Become SDET') || formSource.includes('Start Your QA Career') || formSource.includes('Talk to Advisor') || formSource.includes('Browse Open Roles');
 
+    // --- Standardize Request Type ---
+    let requestType = type || 'General Enquiry';
+
+    // Preserve specific functional types (if they clearly indicate a specific action)
+    if (isBrochureRequest || isSyllabusRequest) {
+      requestType = 'Download Enquiry';
+    } else if (isEnrollmentRequest) {
+      requestType = 'Enroll Enquiry';
+    } else if (isSessionEnquiry) {
+      requestType = 'Session Enquiry';
+    } else if (isWorkshopRequest) {
+      requestType = 'Workshop Request';
+    } else if (type === 'service_request') {
+      requestType = 'Service Request';
+    } else if (type === 'consultation') {
+      requestType = 'Consultation Request';
+    } else if (type === 'event_contact') {
+      requestType = 'Event Inquiry';
+    } else if (type === 'affiliate') {
+      requestType = 'Affiliate Application';
+    } else {
+      // Apply page-based standardization for generic 'contact'/'enrollment'/'lead' forms
+      const lowerSource = (formSource || '').toLowerCase();
+
+      // 1. City Course Enquiry
+      if (lowerSource.includes('city course')) {
+        requestType = 'City Course Enquiry';
+      }
+      // 2. Course Category Enquiry
+      else if (
+        lowerSource.includes('course category') ||
+        lowerSource.includes('business intelligence - hero section') ||
+        lowerSource.includes('data science - hero section') ||
+        lowerSource.includes('digital marketing - hero section') ||
+        lowerSource.includes('software testing - hero section') ||
+        lowerSource.includes('artificial intelligence - hero section') ||
+        // Heuristic: If source indicates a category page explicitly. 
+        // Note: Specific mappings can be added here if category page forms start sending unique sources.
+        (lowerSource.includes('business intelligence') && !lowerSource.includes('power bi') && !lowerSource.includes('tableau')) ||
+        (lowerSource.includes('digital marketing') && !lowerSource.includes('bootcamp') && !lowerSource.includes('ai in digital'))
+      ) {
+        requestType = 'Course Category Enquiry';
+      }
+      // 3. Course Enquiry
+      else if (
+        lowerSource.includes('course') ||
+        lowerSource.includes('program') ||
+        lowerSource.includes('bootcamp') ||
+        lowerSource.includes('class') ||
+        courseName
+      ) {
+        requestType = 'Course Enquiry';
+      }
+      // 4. General Enquiry (Contact Page)
+      else if (lowerSource.includes('contact') || lowerSource.includes('general')) {
+        requestType = 'General Enquiry';
+      }
+      else {
+        // Fallback: If type was explicit (e.g. 'enrollment'), keep it? 
+        // Or standardize 'enrollment' to 'Course Enquiry'?
+        // User wants to standardize. 'enrollment' usually happens on course pages.
+        if (type === 'enrollment') {
+          // handled above
+          requestType = 'Enroll Enquiry';
+        } else if (type === 'contact') {
+          requestType = 'General Enquiry';
+        }
+        // else keep original type or default
+      }
+    }
+
     // Subject Prefix Logic
     let subjectPrefix = '[ENQUIRY]';
     if (isBrochureRequest) {
@@ -195,24 +269,8 @@ export async function POST(request: Request) {
 
     // Admin Template Logic
     let adminTemplate = 'admin-notification-basic.html';
-    // Use detailed template if interest or message is provided
-    const hasDetailedFields = interest || message;
 
-    if (hasDetailedFields) {
-      adminTemplate = 'admin-notification.html';
-    } else if (isHomeHeroForm) {
-      adminTemplate = 'admin-notification-home-hero.html';
-    } else if (isFreeDemoRequest) {
-      adminTemplate = 'admin-notification-free-demo.html';
-    } else if (isMentorRequest) {
-      adminTemplate = 'admin-notification-mentor.html';
-    } else if (isLiveJobsRequest) {
-      adminTemplate = 'admin-notification-live-jobs.html';
-    } else if (isPlacementRequest) {
-      adminTemplate = 'admin-notification-placement.html';
-    } else if (isMentorsPageRequest) {
-      adminTemplate = 'admin-notification-mentors.html';
-    } else if (isWorkshopRequest) {
+    if (isWorkshopRequest) {
       const subjectTag = title ? `[${title.toUpperCase()}]` : '[WORKSHOP REQUEST]';
       subjectPrefix = `${subjectTag} from ${company || 'Unknown Company'} (${fullName})`;
       adminTemplate = 'admin-notification-workshop.html';
@@ -234,6 +292,20 @@ export async function POST(request: Request) {
     } else if (type === 'affiliate') {
       subjectPrefix = `[AFFILIATE APPLICATION] from ${company || fullName}`;
       adminTemplate = 'admin-notification-affiliate.html';
+    } else if (interest || message) { // Previously hasDetailedFields
+      adminTemplate = 'admin-notification.html';
+    } else if (isHomeHeroForm) {
+      adminTemplate = 'admin-notification-home-hero.html';
+    } else if (isFreeDemoRequest) {
+      adminTemplate = 'admin-notification-free-demo.html';
+    } else if (isMentorRequest) {
+      adminTemplate = 'admin-notification-mentor.html';
+    } else if (isLiveJobsRequest) {
+      adminTemplate = 'admin-notification-live-jobs.html';
+    } else if (isPlacementRequest) {
+      adminTemplate = 'admin-notification-placement.html';
+    } else if (isMentorsPageRequest) {
+      adminTemplate = 'admin-notification-mentors.html';
     } else if (source === 'City Course Page - Hero Section' || isCityCourseCareerExplore || isCityCourseCareerEnroll || isCityCourseCTAEnroll || isCityCourseCTADemo) { // Detect by source if type isn't set
       subjectPrefix = `[CITY COURSE ENQUIRY] from ${location || 'Unknown City'}`;
       adminTemplate = 'admin-notification-city-course.html';
@@ -244,19 +316,22 @@ export async function POST(request: Request) {
 
     if (isWorkshopRequest) {
       adminData.company = company || 'N/A';
-      adminData.jobTitle = jobTitle || 'N/A';
       adminData.workshopType = workshopType || 'N/A';
       adminData.participants = participants || 'N/A';
-      adminData.preferredDate = preferredDate || 'N/A';
+      adminData.formTitle = title || 'New Workshop Request';
     }
 
     if (courseName) adminData.courseName = courseName;
 
     // Only include interest and message if they exist (for detailed template)
-    if (hasDetailedFields) {
+    if (interest || message) {
       if (interest) adminData.interest = interest;
       if (message) adminData.message = message;
     }
+
+    // Set standardized type for templates that use {{type}}
+    adminData.type = requestType;
+
     const adminHtml = await getTemplatedEmail(adminTemplate, adminData);
 
     // Admin Subject Logic

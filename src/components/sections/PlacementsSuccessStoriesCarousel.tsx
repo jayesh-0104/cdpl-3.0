@@ -139,7 +139,6 @@ export default function PlacementsSuccessStoriesCarousel({ contained = false }: 
           </div>
         </div>
 
-        <p className="mt-3 text-center text-xs text-slate-500">Hover to pause • Drag or swipe to explore</p>
       </Wrapper>
 
       {/* Keyframes */}

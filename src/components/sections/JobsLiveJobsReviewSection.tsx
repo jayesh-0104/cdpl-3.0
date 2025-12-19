@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 // ---------- Loader (keep inline) ----------
 function SectionLoader({ label = "Loading..." }: { label?: string }) {
@@ -28,6 +29,7 @@ type Review = {
   text: string;
   city?: string;
   logo: { src: string; alt: string };
+  rating: number;
 };
 type PLATFORM = "Google" | "Sulekha" | "Justdial";
 
@@ -40,15 +42,17 @@ const REVIEWS: Review[] = [
     text:
       "I had the opportunity to intern at Cinute, and it has been a great learning experience... I worked on data analysis in Excel, created dashboards, and explored Power BI & Tableau. The quality of teaching is so good...",
     logo: { src: "/slider_logos/google.svg", alt: "Google logo" },
+    rating: 5,
   },
-  { name: "YASH", date: "2025-06-27", source: "Google", text: "—", logo: { src: "/slider_logos/google.svg", alt: "Google logo" } },
-  { name: "Sujal Vaity", date: "2025-06-27", source: "Google", text: "—", logo: { src: "/slider_logos/google.svg", alt: "Google logo" } },
+  { name: "YASH", date: "2025-06-27", source: "Google", text: "—", logo: { src: "/slider_logos/google.svg", alt: "Google logo" }, rating: 5 },
+  { name: "Sujal Vaity", date: "2025-06-27", source: "Google", text: "—", logo: { src: "/slider_logos/google.svg", alt: "Google logo" }, rating: 5 },
   {
     name: "bhumika Ankush",
     date: "2025-06-27",
     source: "Google",
     text: "The subjects taught are relevant and help prepare students for real-world challenges.",
     logo: { src: "/slider_logos/google.svg", alt: "Google logo" },
+    rating: 5,
   },
   {
     name: "Vedang Mohit",
@@ -56,6 +60,7 @@ const REVIEWS: Review[] = [
     source: "Google",
     text: "The subjects taught are relevant and help prepare students for real-world challenges.",
     logo: { src: "/slider_logos/google.svg", alt: "Google logo" },
+    rating: 5,
   },
   {
     name: "Aryan Prasad",
@@ -63,6 +68,7 @@ const REVIEWS: Review[] = [
     source: "Google",
     text: "It's a good opportunity to do course and learn coding languages... good mentors.",
     logo: { src: "/slider_logos/google.svg", alt: "Google logo" },
+    rating: 5,
   },
   {
     name: "Dhruv Salvi",
@@ -71,6 +77,7 @@ const REVIEWS: Review[] = [
     text:
       "Helped me to learn and gain a lot of knowledge and skills growth throughout, humble and good communicating staff and members.",
     logo: { src: "/slider_logos/google.svg", alt: "Google logo" },
+    rating: 5,
   },
   {
     name: "Bhuvan Sharma",
@@ -79,8 +86,9 @@ const REVIEWS: Review[] = [
     text:
       "Good information provided by the domain providers, very good at communicating and humble...",
     logo: { src: "/slider_logos/google.svg", alt: "Google logo" },
+    rating: 5,
   },
-  { name: "Sahil Bhaye", date: "2025-06-27", source: "Google", text: "—", logo: { src: "/slider_logos/google.svg", alt: "Google logo" } },
+  { name: "Sahil Bhaye", date: "2025-06-27", source: "Google", text: "—", logo: { src: "/slider_logos/google.svg", alt: "Google logo" }, rating: 5 },
   {
     name: "Durgesh parab",
     date: "2025-06-27",
@@ -88,6 +96,7 @@ const REVIEWS: Review[] = [
     text:
       "It is best company to get experience... I’m learning full-stack with highly talented staff...",
     logo: { src: "/slider_logos/google.svg", alt: "Google logo" },
+    rating: 5,
   },
 
   // SULEKHA
@@ -99,6 +108,7 @@ const REVIEWS: Review[] = [
     text:
       "Excellent Service, Extremely Professional Behavior, Most Trusted Company. Good explanation and friendly nature.",
     logo: { src: "/slider_logos/sulekha-logo.webp", alt: "Sulekha logo" },
+    rating: 5,
   },
   {
     name: "Riya Rajnath Yadav",
@@ -108,6 +118,7 @@ const REVIEWS: Review[] = [
     text:
       "Highly Affordable Service, Extremely Professional Behavior, Most Trusted Company. The instructor teaches very well...",
     logo: { src: "/slider_logos/sulekha-logo.webp", alt: "Sulekha logo" },
+    rating: 5,
   },
   {
     name: "Shital Sawant",
@@ -117,6 +128,7 @@ const REVIEWS: Review[] = [
     text:
       "Highly Affordable Service, Extremely Professional Behavior, Most Trusted Company. Would recommend the class to freshers & newcomers...",
     logo: { src: "/slider_logos/sulekha-logo.webp", alt: "Sulekha logo" },
+    rating: 5,
   },
   {
     name: "Piyush Prasad",
@@ -126,6 +138,7 @@ const REVIEWS: Review[] = [
     text:
       "Tableau and Excel are excellent batches and the instructors are helpful... I recommend students to enroll in Cinute Digital.",
     logo: { src: "/slider_logos/sulekha-logo.webp", alt: "Sulekha logo" },
+    rating: 5,
   },
 
   // JUSTDIAL
@@ -136,6 +149,7 @@ const REVIEWS: Review[] = [
     text:
       "EMI available, one-on-one mentoring from specialized faculty in AC classrooms. Approachable faculty and resourceful library...",
     logo: { src: "/slider_logos/justdial-logo.png", alt: "Justdial logo" },
+    rating: 5,
   },
   {
     name: "User",
@@ -144,6 +158,7 @@ const REVIEWS: Review[] = [
     text:
       "Amazing trainers who make even tough topics easy to understand. Super approachable and always ready to help.",
     logo: { src: "/slider_logos/justdial-logo.png", alt: "Justdial logo" },
+    rating: 5,
   },
   {
     name: "Aatish",
@@ -152,6 +167,7 @@ const REVIEWS: Review[] = [
     text:
       "Clean and highly specialized facilities. Regular evaluation ensures top-notch quality; multiple facilities cater to diverse needs.",
     logo: { src: "/slider_logos/justdial-logo.png", alt: "Justdial logo" },
+    rating: 5,
   },
   {
     name: "Ami",
@@ -159,12 +175,22 @@ const REVIEWS: Review[] = [
     source: "Justdial",
     text: "Trainers were amazing.",
     logo: { src: "/slider_logos/justdial-logo.png", alt: "Justdial logo" },
+    rating: 5,
   },
 ];
 
 export default function JobsLiveJobsReviewSection() {
   const [tab] = useState<PLATFORM>("Google");
   const filtered = useMemo(() => REVIEWS.filter((r) => r.source === tab), [tab]);
+
+  const stats = useMemo(() => {
+    const rating = filtered.reduce((acc, review) => acc + review.rating, 0) / filtered.length;
+    const total = filtered.length;
+    return { rating, total };
+  }, [filtered]);
+
+  const GOOGLE_LOGO = '/slider_logos/google-logo.svg'; // Ensure this path is correct based on previous file
+
 
   // marquee bits (kept to preserve behavior and sizing from your original)
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -242,13 +268,24 @@ export default function JobsLiveJobsReviewSection() {
   return (
     <section className="overflow-hidden w-full relative bg-gradient-to-b from-sky-50 via-white to-violet-50 dark:[color-scheme:light]">
       <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 py-10">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] font-medium text-slate-600 shadow-sm">
-            ⭐ Explore Our Reviews
-          </span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-            What learners say about <span className="text-brand">Cinute Digital</span>
+        {/* Header Section */}
+        <div className="text-center max-w-7xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
+            <Image src={GOOGLE_LOGO} alt="Google" width={60} height={60} />
+            <span className="text-sm font-medium text-slate-700">
+              Rated <span className="font-bold text-slate-900">{stats.rating}/5</span> based on <span className="font-bold text-slate-900">{stats.total}+</span> reviews
+            </span>
+          </div>
+
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+            Loved by Students,{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">
+              Trusted by Professionals
+            </span>
           </h2>
+          <p className="text-slate-600 text-lg">
+            Join thousands of successful graduates who transformed their careers with us.
+          </p>
         </div>
 
         <ReviewsMarquee />

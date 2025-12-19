@@ -80,7 +80,7 @@ s3.upload_file('data.csv', 'my-bucket', 'processed/data.csv')
       <p>Measure success via adoption metrics and insight quality.</p>
       
       <p>These practices ensure trends like AutoML and edge computing deliver sustainable value, transforming data science from siloed to strategic.</p>`,
-      image: "/blog/content/best-practices-data-trends.jpg"
+      image: "/blog/section/top-data-science-trends-2025-guide/section_2.png"
     },
     {
       title: "Common Pitfalls in Adopting Data Science Trends and Solutions",
@@ -104,7 +104,7 @@ s3.upload_file('data.csv', 'my-bucket', 'processed/data.csv')
       <p>AutoML democratizes, but misconfiguration yields poor models. Solution: Blend automation with oversight; upskill via targeted training.</p>
       
       <p>Avoiding these pitfalls turns potential setbacks into strengths. Teams proactive here see 30% faster adoption rates.</p>`,
-      image: "/blog/content/common-pitfalls-data-trends.jpg"
+      image: "/blog/section/top-data-science-trends-2025-guide/section_3.png"
     },
     {
       title: "Advanced Techniques in 2025 Data Science",
@@ -138,7 +138,7 @@ print(centrality)</code></pre>
       <p>Ensure tamper-proof collaboration. In 2025, it secures federated learning across organizations.</p>
       
       <p>These techniques elevate data science to proactive intelligence, driving competitive edges.</p>`,
-      image: "/blog/content/advanced-data-trends.jpg"
+      image: "/blog/section/top-data-science-trends-2025-guide/section_4.png"
     },
     {
       title: "Essential Tools and Resources for Data Science Trends",
@@ -164,7 +164,7 @@ print(centrality)</code></pre>
       <p>Books: "Hands-On Machine Learning" by Aurélien Géron.</p>
       
       <p>These resources accelerate mastery of trends like ethical AI and edge computing.</p>`,
-      image: "/blog/content/data-tools-resources.jpg"
+      image: "/blog/section/top-data-science-trends-2025-guide/section_5.png"
     },
     {
       title: "Real-World Examples of Data Science Trends in Action",
@@ -185,7 +185,7 @@ print(centrality)</code></pre>
       <p>Amazon's edge-powered recommendations analyze in-store data, boosting sales 15%.</p>
       
       <p>These examples prove trends deliver measurable impact, from efficiency to revenue.</p>`,
-      image: "/blog/content/real-world-data-examples.jpg"
+      image: "/blog/section/top-data-science-trends-2025-guide/section_6.png"
     },
     {
       title: "Future Outlook: Data Science Beyond 2025",
@@ -207,7 +207,7 @@ print(centrality)</code></pre>
       <p>Converging trends create resilient ecosystems. Expect 94% of leaders prioritizing data for AI, per MIT.</p>
       
       <p>Prepare now: Trends evolve, but foundational skills endure.</p>`,
-      image: "/blog/content/future-data-trends.jpg"
+      image: "/blog/section/top-data-science-trends-2025-guide/section_7.png"
     }
   ],
 

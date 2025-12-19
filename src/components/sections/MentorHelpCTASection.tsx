@@ -265,7 +265,7 @@ function Ticker() {
   return (
     <div className="relative overflow-hidden">
       <div
-        className="animate-[marquee_20s_linear_infinite] whitespace-nowrap py-2 text-[12px] text-neutral-700"
+        className="animate-[marquee_2s_linear_infinite] sm:animate-[marquee_20s_linear_infinite] whitespace-nowrap py-2 text-[12px] text-neutral-700"
         style={{
           maskImage:
             "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",

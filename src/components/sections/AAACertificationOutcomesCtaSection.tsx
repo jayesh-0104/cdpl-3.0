@@ -2,10 +2,31 @@
 
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { AAAVerificationChoiceModal } from "../ui/AAAVerificationChoiceModal";
 
 export default function AAACertificationOutcomesCtaSection() {
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+
+  const handleOfficial = () => {
+    window.open("https://aaa-accreditation.org/adcp/", "_blank");
+    setShowModal(false);
+  };
+
+  const handleCdpl = () => {
+    router.push("/cdpl-certificate-validation");
+    setShowModal(false);
+  };
+
   return (
     <section className="bg-white">
+      <AAAVerificationChoiceModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onOfficialVerify={handleOfficial}
+        onCdplVerify={handleCdpl}
+      />
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-2">
           {/* ===== Card 1 — Program outcomes (UNCHANGED) ===== */}
@@ -52,12 +73,13 @@ export default function AAACertificationOutcomesCtaSection() {
               >
                 Talk to admissions
               </Link>
-              <Link
-                href="/cdpl-certificate-validation"
+              <button
+                type="button"
+                onClick={() => setShowModal(true)}
                 className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 ring-1 ring-slate-200 transition hover:bg-slate-50"
               >
                 Validate a certificate
-              </Link>
+              </button>
             </div>
           </div>
         </div>

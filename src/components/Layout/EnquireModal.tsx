@@ -10,9 +10,10 @@ import { isValidPhoneNumber } from 'libphonenumber-js';
 interface EnquireModalProps {
     isOpen: boolean;
     onClose: () => void;
+    source?: string;
 }
 
-const EnquireModal: React.FC<EnquireModalProps> = ({ isOpen, onClose }) => {
+const EnquireModal: React.FC<EnquireModalProps> = ({ isOpen, onClose, source }) => {
     // Form state
     const [formData, setFormData] = useState({
         fullName: '',
@@ -147,7 +148,7 @@ const EnquireModal: React.FC<EnquireModalProps> = ({ isOpen, onClose }) => {
                     },
                     body: JSON.stringify({
                         ...formData,
-                        source: 'Book Free Demo - Header Button'
+                        source: source || 'Book Free Demo - Header Button'
                     }),
                 });
 

@@ -2,10 +2,12 @@
 
 import { useEffect, useMemo, useState, Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Certificate, getCertificateById } from "@/data/certificates/registry";
 import { CheckCircle2, AlertCircle, Link as LinkIcon, Copy } from "lucide-react";
 import dynamic from "next/dynamic";
+import { AAAVerificationChoiceModal } from "../ui/AAAVerificationChoiceModal";
 
 function SectionLoader({ label = "Loading..." }: { label?: string }) {
   return (
@@ -30,6 +32,10 @@ function CertificationValidatorContent() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
+  // AAA Choice State
+  const [showAAAChoice, setShowAAAChoice] = useState(false);
+  const [pendingCertificate, setPendingCertificate] = useState<Certificate | null>(null);
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -49,6 +55,8 @@ function CertificationValidatorContent() {
     setError("");
     setResult(null);
     setCopied(false);
+    setShowAAAChoice(false);
+    setPendingCertificate(null);
 
     if (!pattern.test(id)) {
       setError(
@@ -63,8 +71,42 @@ function CertificationValidatorContent() {
       setUrlId(undefined);
       return;
     }
+
+    // Intercept AAA certificates
+    if (hit.program === "AAA") {
+      setPendingCertificate(hit);
+      setShowAAAChoice(true);
+      return;
+    }
+
     setResult(hit);
     setUrlId(hit.id); // show in URL for sharing
+  };
+
+  const handleAAAChoice = (type: "official" | "cdpl") => {
+    if (type === "official") {
+      window.open("https://aaa-accreditation.org/adcp/", "_blank");
+      // Optional: Close the choice if they go to official site?
+      // Or keep it open. Let's keep it open so they see what happened or can choose the other.
+      // Actually, user said "choose... to validate it either from official site or cdpl".
+      // If they go official, they leave (new tab).
+    } else {
+      // CDPL
+      if (pendingCertificate) {
+        setResult(pendingCertificate);
+        setUrlId(pendingCertificate.id);
+      }
+      setShowAAAChoice(false);
+      setPendingCertificate(null);
+    }
+  };
+
+  const resetValidator = () => {
+    setQuery("");
+    setResult(null);
+    setUrlId(undefined);
+    setError("");
+    setCopied(false);
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -87,13 +129,16 @@ function CertificationValidatorContent() {
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsLightboxOpen(false);
+      if (e.key === "Escape") {
+        setIsLightboxOpen(false);
+        setShowAAAChoice(false); // Also close AAA choice on Esc
+      }
     };
-    if (isLightboxOpen) {
+    if (isLightboxOpen || showAAAChoice) {
       window.addEventListener("keydown", handleEsc);
     }
     return () => window.removeEventListener("keydown", handleEsc);
-  }, [isLightboxOpen]);
+  }, [isLightboxOpen, showAAAChoice]);
 
   // Hydration-safe links
   const absoluteShareUrl =
@@ -118,10 +163,19 @@ function CertificationValidatorContent() {
   };
 
 
-
   return (
     <section id="validator-section" className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+
+        {/* AAA Choice Modal */}
+        <AAAVerificationChoiceModal
+          isOpen={showAAAChoice}
+          onClose={() => setShowAAAChoice(false)}
+          certificate={pendingCertificate}
+          onOfficialVerify={() => handleAAAChoice("official")}
+          onCdplVerify={() => handleAAAChoice("cdpl")}
+        />
+
         {/* Lightbox Overlay */}
         {isLightboxOpen && result && (
           <div
@@ -166,6 +220,19 @@ function CertificationValidatorContent() {
             <div className="relative z-10 grid gap-8 sm:grid-cols-5">
               {/* Info Column (Left - sm:col-span-3) */}
               <div className="order-2 sm:order-1 sm:col-span-3">
+                <div className="mb-6">
+                  <button
+                    type="button"
+                    onClick={resetValidator}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition shadow-sm"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Check Another Certificate
+                  </button>
+                </div>
+
                 <div className="flex items-center gap-2">
                   <h3 className="relative z-10 text-lg font-extrabold text-slate-900">
                     Course Completion Certificate
@@ -219,6 +286,19 @@ function CertificationValidatorContent() {
                   </Link>
                   .
                 </p>
+
+                <div className="mt-6">
+                  <button
+                    type="button"
+                    onClick={resetValidator}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition shadow-sm"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Check Another Certificate
+                  </button>
+                </div>
               </div>
 
               {/* Image Column (Right - sm:col-span-2) */}
@@ -300,7 +380,7 @@ function CertificationValidatorContent() {
                   id="certId"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Try: CDPLXYXDVE"
+                  placeholder="Try: CDPLXYXDVE or CD402 (AAA)"
                   style={{ color: "black", opacity: 1, colorScheme: "light" }}
                   className="w-full rounded-xl border border-slate-200 bg-white pl-9 pr-10 py-2.5 text-sm font-medium !text-black opacity-100 outline-none ring-0 placeholder:text-slate-400 focus:border-orange-300"
                   aria-describedby="certHelp"
@@ -338,7 +418,22 @@ function CertificationValidatorContent() {
                   className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 hover:bg-slate-50"
                   aria-label="Use example CDPLXYXDVE"
                 >
-                  CDPLXYXDVE
+                  CDPL
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setQuery("CD402")}
+                  className="flex items-center gap-1 rounded-full border border-orange-200 bg-orange-50 pl-2 pr-3 py-1 text-xs font-semibold text-orange-700 hover:bg-orange-100"
+                  aria-label="Use example CD402"
+                >
+                  <Image
+                    src="/certifications_images/logos/logo_aaa.png"
+                    alt="AAA Logo"
+                    width={16}
+                    height={16}
+                    className="h-3 w-auto object-contain"
+                  />
+                  AAA
                 </button>
               </div>
             </form>

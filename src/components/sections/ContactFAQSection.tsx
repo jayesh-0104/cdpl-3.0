@@ -157,7 +157,7 @@ export function ContactFAQSection() {
                     <h3 className="mt-2 text-lg text-slate-900 font-semibold">{item.q}</h3>
                   </div>
                   <span
-                    className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition group-open:rotate-45"
+                    className="mt-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition group-open:rotate-45"
                     aria-hidden
                     title="Toggle"
                   >

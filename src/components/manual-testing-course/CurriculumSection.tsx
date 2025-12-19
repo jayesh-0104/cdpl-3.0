@@ -199,7 +199,7 @@ const COLOR_MAP: Record<Accent, {
 /* ---------- UI Bits ---------- */
 function Badge({ children }: { children: string }) {
     return (
-        <span className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-700 shadow-sm">
+        <span className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-700 shadow-sm whitespace-nowrap">
             {children}
         </span>
     );

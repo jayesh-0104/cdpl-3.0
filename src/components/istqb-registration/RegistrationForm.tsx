@@ -35,48 +35,123 @@ const CustomInput = React.forwardRef(({ className, ...props }: any, ref) => (
 ));
 CustomInput.displayName = 'CustomInput';
 
+import { isValidPhoneNumber } from 'libphonenumber-js';
+
+// ... other imports
+
 export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedLevel, setSelectedLevel] = useState("");
-    const [phone, setPhone] = useState<string | undefined>();
+
+    // Form State
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        city: '',
+        jobTitle: ''
+    });
+
+    const [errors, setErrors] = useState<{
+        name?: string;
+        email?: string;
+        phone?: string;
+    }>({});
+
+    // Validation Functions (Matched with HomeHeroSection)
+    const validateFullName = (name: string) => {
+        if (!name) return 'Full Name is required.';
+        if (name.trim().length < 3) return 'Full Name must be at least 3 characters.';
+        return undefined;
+    };
+
+    const validateEmail = (email: string) => {
+        if (!email) return 'Email Address is required.';
+        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) return 'Invalid email format.';
+        return undefined;
+    };
+
+    const validatePhoneNumber = (phone: string | undefined) => {
+        if (!phone) return 'Mobile Number is required.';
+        if (!isValidPhoneNumber(phone)) return 'Invalid phone number format.';
+
+        const digits = phone.replace(/\D/g, '');
+        // Check for repeating digits
+        if (/^(\d)\1+$/.test(digits)) return 'Phone number cannot consist of repeating digits.';
+
+        // Check for sequential digits
+        const isSequential = (num: string) => {
+            for (let i = 0; i < num.length - 2; i++) {
+                const n1 = parseInt(num[i]);
+                const n2 = parseInt(num[i + 1]);
+                const n3 = parseInt(num[i + 2]);
+                if ((n2 === n1 + 1 && n3 === n2 + 1) || (n2 === n1 - 1 && n3 === n2 - 1)) return true;
+            }
+            return false;
+        };
+        if (isSequential(digits)) return 'Phone number cannot consist of sequential digits.';
+
+        // Check for all zeros
+        if (/^0+$/.test(digits)) return 'Phone number cannot be all zeros.';
+
+        return undefined;
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+
+        // Real-time validation clearing (optional, or validate on change)
+        if (errors[name as keyof typeof errors]) {
+            setErrors(prev => ({ ...prev, [name]: undefined }));
+        }
+    };
+
+    const handlePhoneChange = (value: string | undefined) => {
+        setFormData(prev => ({ ...prev, phone: value || '' }));
+        if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
+    };
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
+        // Run Validations
+        const nameError = validateFullName(formData.name);
+        const emailError = validateEmail(formData.email);
+        const phoneError = validatePhoneNumber(formData.phone);
+
+        if (nameError || emailError || phoneError) {
+            setErrors({ name: nameError, email: emailError, phone: phoneError });
+            return;
+        }
 
         if (!selectedLevel) {
             alert('Please select a certification level.');
             return;
         }
 
-        if (!phone) {
-            alert('Please enter a valid phone number.');
-            return;
-        }
-
         setIsSubmitting(true);
-        const formData = new FormData(event.currentTarget);
+        const submissionData = new FormData();
+        submissionData.append('name', formData.name);
+        submissionData.append('email', formData.email);
+        submissionData.append('phone', formData.phone);
+        submissionData.append('city', formData.city); // basic required check by browser
+        submissionData.append('jobTitle', formData.jobTitle); // basic required check by browser
+        submissionData.append('certificationLevel', selectedLevel);
 
         // Extract data for local state passing
         const data = {
-            name: formData.get('name') as string,
-            email: formData.get('email') as string,
-            phone: phone, // Use state phone
-            city: formData.get('city') as string,
-            jobTitle: formData.get('jobTitle') as string,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            city: formData.city,
+            jobTitle: formData.jobTitle,
             certificationLevel: selectedLevel,
         };
 
         try {
-            // Append manually if hidden input fails or just to be safe
-            if (!formData.get('certificationLevel')) {
-                formData.append('certificationLevel', selectedLevel);
-            }
-            // Append phone from state
-            formData.delete('phone');
-            formData.append('phone', phone);
-
-            const result = await submitIstqbStep1(formData);
+            const result = await submitIstqbStep1(submissionData);
             if (result.success) {
                 onSuccess(data);
             } else {
@@ -96,7 +171,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-3xl shadow-xl border border-slate-100 py-8 px-6 md:p-10 relative h-full flex flex-col"
         >
-            {/* Decor */}
+            {/* ... Decor & Header unchanged ... */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-orange-100/40 to-transparent rounded-bl-full rounded-tr-3xl -z-10" />
 
             <div className="mb-6">
@@ -109,30 +184,38 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 <div className="space-y-1.5">
                     <label htmlFor="name" className="text-sm font-semibold text-slate-700 ml-1">Full Name</label>
                     <div className="relative">
-                        <User className="absolute left-3.5 top-3.5 h-5 w-5 text-slate-400 z-10" />
+                        <User className="absolute left-3.5 top-3.5 h-5 w-5 text-blue-500 z-10" />
                         <input
                             type="text"
                             name="name"
                             required
-                            placeholder="John Doe"
-                            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all outline-none bg-slate-50 focus:bg-white"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            onBlur={() => setErrors(prev => ({ ...prev, name: validateFullName(formData.name) }))}
+                            placeholder="Rahul Sharma"
+                            className={`w-full pl-11 pr-4 py-3 rounded-xl border transition-all outline-none bg-slate-50 focus:bg-white ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'}`}
                         />
                     </div>
+                    {errors.name && <p className="text-red-500 text-xs ml-1">{errors.name}</p>}
                 </div>
 
                 {/* Email */}
                 <div className="space-y-1.5">
                     <label htmlFor="email" className="text-sm font-semibold text-slate-700 ml-1">Email Address</label>
                     <div className="relative">
-                        <Mail className="absolute left-3.5 top-3.5 h-5 w-5 text-slate-400 z-10" />
+                        <Mail className="absolute left-3.5 top-3.5 h-5 w-5 text-purple-500 z-10" />
                         <input
                             type="email"
                             name="email"
                             required
-                            placeholder="john@example.com"
-                            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all outline-none bg-slate-50 focus:bg-white"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            onBlur={() => setErrors(prev => ({ ...prev, email: validateEmail(formData.email) }))}
+                            placeholder="rahul@gmail.com"
+                            className={`w-full pl-11 pr-4 py-3 rounded-xl border transition-all outline-none bg-slate-50 focus:bg-white ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-slate-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200'}`}
                         />
                     </div>
+                    {errors.email && <p className="text-red-500 text-xs ml-1">{errors.email}</p>}
                 </div>
 
                 {/* Phone */}
@@ -142,13 +225,21 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                         <PhoneInput
                             international
                             defaultCountry="IN"
-                            value={phone}
-                            onChange={setPhone}
-                            className="flex w-full rounded-xl border border-slate-200 focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-200 transition-all bg-slate-50 focus-within:bg-white overflow-hidden pl-0"
+                            value={formData.phone}
+                            onChange={handlePhoneChange}
+                            onBlur={() => setErrors(prev => ({ ...prev, phone: validatePhoneNumber(formData.phone) }))}
+                            className={`flex w-full rounded-xl border transition-all bg-slate-50 focus-within:bg-white overflow-hidden pl-0 ${errors.phone ? 'border-red-500 focus-within:border-red-500' : 'border-slate-200 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-200'}`}
                             controlStyle={{ border: 'none', background: 'transparent' }}
                             inputComponent={CustomInput}
                         />
                     </div>
+                    {errors.phone && <p className="text-red-500 text-xs ml-1">{errors.phone}</p>}
+                    <style jsx global>{`
+                        /* ... existing styles ... */
+                        /* Add error border style support if needed, mostly handled by classnames */
+                    `}</style>
+                    {/* ... Rest of styles kept same ... */}
+
                     <style jsx global>{`
                         .PhoneInput {
                             display: flex;
@@ -209,13 +300,15 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 <div className="space-y-1.5">
                     <label htmlFor="city" className="text-sm font-semibold text-slate-700 ml-1">City</label>
                     <div className="relative">
-                        <MapPin className="absolute left-3.5 top-3.5 h-5 w-5 text-slate-400 z-10" />
+                        <MapPin className="absolute left-3.5 top-3.5 h-5 w-5 text-pink-500 z-10" />
                         <input
                             type="text"
                             name="city"
                             required
+                            value={formData.city}
+                            onChange={handleInputChange}
                             placeholder="Mumbai"
-                            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all outline-none bg-slate-50 focus:bg-white"
+                            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all outline-none bg-slate-50 focus:bg-white"
                         />
                     </div>
                 </div>
@@ -224,13 +317,15 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 <div className="space-y-1.5">
                     <label htmlFor="jobTitle" className="text-sm font-semibold text-slate-700 ml-1">Job Title / Designation</label>
                     <div className="relative">
-                        <Briefcase className="absolute left-3.5 top-3.5 h-5 w-5 text-slate-400 z-10" />
+                        <Briefcase className="absolute left-3.5 top-3.5 h-5 w-5 text-amber-500 z-10" />
                         <input
                             type="text"
                             name="jobTitle"
                             required
+                            value={formData.jobTitle}
+                            onChange={handleInputChange}
                             placeholder="QA Engineer"
-                            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all outline-none bg-slate-50 focus:bg-white"
+                            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none bg-slate-50 focus:bg-white"
                         />
                     </div>
                 </div>
@@ -239,13 +334,13 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
                 <div className="space-y-1.5 relative z-50 pb-4">
                     <label className="text-sm font-semibold text-slate-700 ml-1">ISTQB Certification Level</label>
                     <div className="relative">
-                        <Award className="absolute left-3.5 top-3.5 h-5 w-5 text-slate-400 z-10" />
+                        <Award className="absolute left-3.5 top-3.5 h-5 w-5 text-indigo-500 z-10" />
                         <button
                             type="button"
                             onClick={() => setIsOpen(!isOpen)}
                             className={`w-full text-left pl-11 pr-10 py-3 rounded-xl border transition-all outline-none bg-slate-50 focus:bg-white ${isOpen
-                                ? 'border-orange-500 ring-2 ring-orange-200 bg-white'
-                                : 'border-slate-200 hover:border-orange-300'
+                                ? 'border-indigo-500 ring-2 ring-indigo-200 bg-white'
+                                : 'border-slate-200 hover:border-indigo-300'
                                 }`}
                         >
                             <span className={`block truncate ${!selectedLevel ? 'text-slate-400 font-normal' : 'text-slate-900 font-medium'}`}>

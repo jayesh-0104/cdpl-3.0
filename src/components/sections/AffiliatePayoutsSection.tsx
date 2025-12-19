@@ -116,7 +116,11 @@ function patternFor(i: number, color: string, fade = 1): React.CSSProperties {
 
 export default function AffiliatePayoutsSection() {
   return (
-    <div id="payouts">
+    <section
+      id="payouts"
+      className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8"
+      aria-labelledby="payouts-heading"
+    >
       <h2 className="text-3xl font-bold tracking-tight">Payouts &amp; tracking</h2>
       <p className="mt-2 max-w-2xl text-slate-600">
         We keep payouts predictable and tracking transparent so you always know where you stand.
@@ -208,6 +212,6 @@ export default function AffiliatePayoutsSection() {
           </motion.div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

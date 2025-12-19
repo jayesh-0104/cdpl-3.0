@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp, FolderOpen, Mail, ArrowRight } from "lucide-react";
+import { TrendingUp, FolderOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getAllCategories, getPostsByCategory, getAllPosts } from "@/data/BlogPostData";
 
@@ -31,7 +31,7 @@ const BlogSidebarCategory = ({ categoryId, categoryName }: BlogSidebarCategoryPr
           <TrendingUp className="w-5 h-5 text-indigo-600" />
           <h3 className="text-lg font-bold text-gray-900">Latest in {categoryName}</h3>
         </div>
-        
+
         {categoryPosts.length > 0 ? (
           <div className="space-y-4">
             {categoryPosts.map((post, index) => (
@@ -78,17 +78,15 @@ const BlogSidebarCategory = ({ categoryId, categoryName }: BlogSidebarCategoryPr
             <Link
               key={category.id}
               href={`/blog/category/${category.slug}`}
-              className={`group flex items-center justify-between p-3 bg-white hover:bg-purple-50 rounded-lg transition-all duration-200 border ${
-                category.id === categoryId 
-                  ? 'border-purple-400 bg-purple-50' 
-                  : 'border-transparent hover:border-purple-200'
-              }`}
+              className={`group flex items-center justify-between p-3 bg-white hover:bg-purple-50 rounded-lg transition-all duration-200 border ${category.id === categoryId
+                ? 'border-purple-400 bg-purple-50'
+                : 'border-transparent hover:border-purple-200'
+                }`}
             >
-              <span className={`text-sm font-medium transition-colors ${
-                category.id === categoryId 
-                  ? 'text-purple-700 font-bold' 
-                  : 'text-gray-700 group-hover:text-purple-700'
-              }`}>
+              <span className={`text-sm font-medium transition-colors ${category.id === categoryId
+                ? 'text-purple-700 font-bold'
+                : 'text-gray-700 group-hover:text-purple-700'
+                }`}>
                 {category.name}
               </span>
               <span className="px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">
@@ -97,7 +95,7 @@ const BlogSidebarCategory = ({ categoryId, categoryName }: BlogSidebarCategoryPr
             </Link>
           ))}
         </div>
-        
+
         {/* View All Categories Link */}
         <div className="mt-4 pt-4 border-t border-purple-200">
           <Link
@@ -111,7 +109,7 @@ const BlogSidebarCategory = ({ categoryId, categoryName }: BlogSidebarCategoryPr
       </div>
 
       {/* Newsletter Section */}
-      <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 shadow-sm border border-orange-100">
+      {/* <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 shadow-sm border border-orange-100">
         <div className="flex items-center gap-2 mb-4">
           <Mail className="w-5 h-5 text-orange-600" />
           <h3 className="text-lg font-bold text-gray-900">Newsletter</h3>
@@ -135,7 +133,7 @@ const BlogSidebarCategory = ({ categoryId, categoryName }: BlogSidebarCategoryPr
         <p className="text-xs text-gray-600 mt-3 text-center">
           No spam. Unsubscribe anytime.
         </p>
-      </div>
+      </div> */}
 
       {/* Popular Tags */}
       <div className="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-xl p-6 shadow-sm border border-cyan-100">

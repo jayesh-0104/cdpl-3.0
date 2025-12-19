@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -20,24 +21,61 @@ interface LeadFormProps {
     subtitle?: string;
     buttonText?: string;
     showCourse?: boolean;
+    source?: string;
 }
 
 export default function LeadForm({
     title = "Book Your Free Demo Class",
     subtitle = "Get personalized career guidance in 5 minutes",
     buttonText = "Book Free Demo Now",
-    showCourse = true
+    showCourse = true,
+    source = "Course Category - Hero Section (Default)"
 }: LeadFormProps) {
+    const [isSuccess, setIsSuccess] = useState(false);
+
     const form = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: { name: '', email: '', phone: '', course: '' },
     });
 
-    const onSubmit = async () => {
-        await new Promise(r => setTimeout(r, 1500));
-        alert('Thank you! We’ll call you in 2 hours.');
-        form.reset();
+    const onSubmit = async (data: FormData) => {
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fullName: data.name,
+                    email: data.email,
+                    phone: data.phone,
+                    interest: data.course,
+                    source: source,
+                }),
+            });
+            if (response.ok) {
+                setIsSuccess(true);
+                form.reset();
+            } else {
+                alert('Submission failed. Please try again.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('An error occurred. Please try again.');
+        }
     };
+
+    if (isSuccess) {
+        return (
+            <div className="w-full flex flex-col items-center justify-center text-center p-6 bg-green-50 rounded-xl border border-green-100">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
+                <p className="text-gray-600">We received your enquiry. Our expert advisor will call you within 2 hours.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="w-full overflow-hidden">

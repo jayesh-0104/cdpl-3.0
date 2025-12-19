@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp, FolderOpen, Mail, ArrowRight } from "lucide-react";
+import { TrendingUp, FolderOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getAllCategories, getAllPosts } from "@/data/BlogPostData";
 
@@ -104,7 +104,7 @@ const BlogSidebar = () => {
             </Link>
           ))}
         </div>
-        
+
         {/* View All Categories Link */}
         <div className="mt-4 pt-4 border-t border-purple-200">
           <Link
@@ -118,7 +118,7 @@ const BlogSidebar = () => {
       </div>
 
       {/* Newsletter Section */}
-      <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 shadow-sm border border-orange-100">
+      {/* <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 shadow-sm border border-orange-100">
         <div className="flex items-center gap-2 mb-4">
           <Mail className="w-5 h-5 text-orange-600" />
           <h3 className="text-lg font-bold text-gray-900">Newsletter</h3>
@@ -142,7 +142,7 @@ const BlogSidebar = () => {
         <p className="text-xs text-gray-600 mt-3 text-center">
           No spam. Unsubscribe anytime.
         </p>
-      </div>
+      </div> */}
 
       {/* Tags Cloud - DYNAMIC */}
       <div className="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-xl p-6 shadow-sm border border-cyan-100">

@@ -1,9 +1,14 @@
 "use client";
 
-import { Calendar, Clock, User, ArrowRight } from "lucide-react";
+import { Calendar, Clock, User, ArrowRight, Home, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { getFeaturedPost, getCategoryById, getAuthorById } from "@/data/BlogPostData";
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+];
 
 const BlogHero = () => {
   const featuredPost = getFeaturedPost();
@@ -37,6 +42,32 @@ const BlogHero = () => {
   return (
     <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumbs for SEO & UX */}
+        <nav aria-label="Breadcrumb" className="mb-6">
+          <ol className="flex flex-wrap items-center gap-2 text-sm text-slate-600">
+            {breadcrumbs.map((c, i) => {
+              const isLast = i === breadcrumbs.length - 1;
+              return (
+                <li key={i} className="flex items-center gap-2">
+                  {i === 0 ? <Home className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                  {isLast ? (
+                    <span className="font-semibold text-slate-900 cursor-default">
+                      {c.label}
+                    </span>
+                  ) : (
+                    <Link
+                      href={c.href}
+                      className="hover:text-indigo-700 transition-colors"
+                    >
+                      {c.label}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+
         {/* Featured Article Card */}
         <article className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-gray-100">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-12">

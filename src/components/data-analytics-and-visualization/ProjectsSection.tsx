@@ -122,7 +122,7 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Project methodology */}
-                <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-12 text-white">
+                <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl px-6 py-8 md:p-12 text-white">
                     <h3 className="text-3xl font-bold mb-8">Our Project Methodology</h3>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         {[
@@ -149,7 +149,7 @@ export default function ProjectsSection() {
                         ].map((item, index) => (
                             <div key={index} className="relative">
                                 <div className="flex items-start gap-4">
-                                    <div className="flex-shrink-0 md:w-8 xl:w-12 h-12 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-600 text-white flex items-center justify-center font-bold text-lg">
+                                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-600 text-white flex items-center justify-center font-bold text-lg">
                                         {item.step}
                                     </div>
                                     <div>

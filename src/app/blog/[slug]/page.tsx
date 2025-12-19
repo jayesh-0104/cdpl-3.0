@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 {/* Contact Section */}
                 <aside role="complementary" aria-label="Contact information">
                     <React.Suspense fallback={<div>Loading contact form...</div>}>
-                        <BlogPostContactSection />
+                        <BlogPostContactSection slug={slug} />
                     </React.Suspense>
                 </aside>
             </article>

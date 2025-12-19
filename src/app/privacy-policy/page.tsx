@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
                   consumers’ personal information, that does business in the State of California.
                 </li>
                 <li>
-                  <strong>Company</strong> (referred to as either “the Company”, “We”, “Us” or “Our” in this Agreement) refers to Cinute Digital Pvt. Ltd.  Office # 1, 2nd Floor, Ashley Towers, Beverly Park, Miraroad East, Thane 401107<br />
+                  <strong>Company</strong> (referred to as either “the Company”, “We”, “Us” or “Our” in this Agreement) refers to Cinute Digital Pvt. Ltd.  Office #1, 2nd Floor, Ashley Tower, Kanakia Road, Vagad Nagar, Beverly Park, Mira Road, Mira Bhayandar, Mumbai, Maharashtra 401107<br />
                   For the purpose of the GDPR, the Company is the Data Controller.
                 </li>
                 <li>

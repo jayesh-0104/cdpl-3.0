@@ -97,7 +97,7 @@ export default function ProjectsSection() {
               ].join(' ')}
             >
               {/* Header row */}
-              <div className="flex items-start justify-between p-6 pb-0">
+              <div className="flex items-start justify-between pl-6 py-6 pb-0 pr-28">
                 <div className="flex items-center gap-3">
                   <div className="grid h-12 w-12 place-items-center rounded-xl bg-white text-slate-800 shadow-sm">
                     {p.icon}
@@ -106,7 +106,7 @@ export default function ProjectsSection() {
                     {p.title}
                   </h3>
                 </div>
-                <span className={`ml-3 rounded-full px-2.5 py-1 text-[11px] font-semibold ${p.chipBg} ${p.chipText}`}>
+                <span className={`absolute top-6 right-6 rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap ${p.chipBg} ${p.chipText}`}>
                   Hands-On
                 </span>
               </div>

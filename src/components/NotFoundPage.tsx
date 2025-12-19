@@ -83,7 +83,7 @@ export default function NotFoundPage() {
         <p className="mt-12 text-sm text-gray-500">
           Need assistance?{" "}
           <Link
-            href="/contact"
+            href="/contact-us"
             className="text-indigo-600 hover:text-indigo-700 font-medium underline underline-offset-2"
           >
             Contact our support team

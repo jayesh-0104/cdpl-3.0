@@ -235,7 +235,7 @@ export default function AboutStatsSection() {
                     </Link>
                     <Link
                         href="/reviews"
-                        className="inline-flex items-center justify-center rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:translate-y-[-1px] hover:shadow-md hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
+                        className="inline-flex items-center justify-center rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
                     >
                         Read Learner Reviews
                     </Link>

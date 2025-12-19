@@ -17,11 +17,16 @@ type CourseExtras = {
   highlights?: string[];
   brochureHref?: string;
   countdown?: { hours: number; minutes: number; seconds: number };
-  icon?: ReactNode;
+  icon?: ReactNode | string;
   students?: string;
   level?: string;
   duration?: string;
   price?: string;
+  features?: string[];
+  syllabusLink?: string;
+  offerEndsAt?: string;
+  link?: string;
+  popular?: boolean;
 };
 
 type UICourse = BaseCourse & Partial<CourseExtras>;
@@ -49,11 +54,13 @@ function RevealCoursesGrid({
   categoryBgColor,
   buttonLabel = "View All Courses",
   visibleCount = 3,
+  nowMs
 }: {
   courses: UICourse[];
   categoryBgColor: string;
   buttonLabel?: string;
   visibleCount?: number;
+  nowMs: number;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -123,7 +130,7 @@ function RevealCoursesGrid({
             itemProp="itemListElement"
           >
             <meta itemProp="position" content={String(idx + 1)} />
-            <CourseCard course={course} categoryBgColor={categoryBgColor} />
+            <CourseCard course={course as any} index={idx} nowMs={nowMs} categoryBgColor={categoryBgColor} />
           </div>
         ))}
       </div>
@@ -152,7 +159,7 @@ function RevealCoursesGrid({
 
                 >
                   <meta itemProp="position" content={String(visibleCount + idx + 1)} />
-                  <CourseCard course={course} categoryBgColor={categoryBgColor} />
+                  <CourseCard course={course as any} index={visibleCount + idx} nowMs={nowMs} categoryBgColor={categoryBgColor} />
                 </div>
               ))}
             </div>
@@ -179,6 +186,13 @@ function RevealCoursesGrid({
 export default function FilterableCourseSections() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+
+  // Timer logic for countdown
+  const [nowMs, setNowMs] = useState<number>(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNowMs(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
 
   void setSelectedCategory;
   void setSearchTerm;
@@ -292,6 +306,7 @@ export default function FilterableCourseSections() {
                     categoryBgColor={textToBg(category.color)}
                     buttonLabel={`View All ${category.name} Courses`}
                     visibleCount={3}
+                    nowMs={nowMs}
                   />
                 </div>
               </div>
@@ -302,3 +317,4 @@ export default function FilterableCourseSections() {
     </>
   );
 }
+

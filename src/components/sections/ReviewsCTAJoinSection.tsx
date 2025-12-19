@@ -1,66 +1,178 @@
 "use client";
 
 import Link from "next/link";
-import { Star } from "lucide-react";
-import { CSSProperties } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Star, Sparkles, ArrowRight, Users, Target, Clock, Award } from "lucide-react";
+
+// Animation variants
+const fadeUp = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1.0] as const }
+};
 
 export default function CTAJoinSection() {
+  const prefersReduced = useReducedMotion();
+
   return (
-    <section id="cta-join" aria-label="Join CDPL programs" className="relative overflow-hidden bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 lg:py-16 sm:px-6 lg:px-8">
-        <div className="relative isolate overflow-hidden rounded-3xl border border-neutral-200 bg-gradient-to-br from-white to-neutral-50 p-5 sm:p-8 lg:p-12 shadow-[0_24px_80px_-40px_rgba(0,0,0,.35)]">
-          <div className="pointer-events-none absolute -top-20 left-1/2 h-72 w-[860px] -translate-x-1/2 rounded-full bg-[var(--color-brand)]/10 blur-3xl" />
+    <section
+      id="cta-join"
+      aria-label="Join CDPL programs"
+      className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+    >
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={prefersReduced ? {} : {
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-32 -right-32 w-[600px] h-[600px] bg-gradient-to-br from-orange-500/20 to-amber-500/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={prefersReduced ? {} : {
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-32 -left-32 w-[500px] h-[500px] bg-gradient-to-tr from-blue-500/20 to-indigo-500/10 rounded-full blur-3xl"
+        />
 
-          <div className="relative z-10 grid items-center gap-6 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-brand)]/20 bg-[var(--color-brand)]/5 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-brand)]" />
-                Limited seats for this cohort
+        {/* Grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px'
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:py-24 sm:px-6 lg:px-8">
+        <div className="relative">
+          {/* Main Content Card */}
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 lg:p-14 shadow-2xl">
+            {/* Decorative corner gradient */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-orange-500/20 to-transparent rounded-bl-full" />
+
+            <div className="relative z-10 grid items-center gap-10 lg:grid-cols-12">
+              {/* Left Content */}
+              <div className="lg:col-span-7">
+                {/* Badge */}
+                <motion.div {...fadeUp}>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/30 px-4 py-2 mb-6">
+                    <Sparkles className="h-4 w-4 text-orange-400" />
+                    <span className="text-xs font-semibold uppercase tracking-wide text-orange-300">
+                      Limited Seats Available
+                    </span>
+                  </div>
+                </motion.div>
+
+                {/* Headline */}
+                <motion.h2
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white"
+                >
+                  Ready to Turn Practice into{" "}
+                  <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 bg-clip-text text-transparent">
+                    Offers
+                  </span>
+                  ?
+                </motion.h2>
+
+                {/* Description */}
+                <motion.p
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="mt-5 max-w-2xl text-base sm:text-lg text-slate-300 leading-relaxed"
+                >
+                  Join our hands-on programs in{" "}
+                  <span className="font-semibold text-white">Testing</span>,{" "}
+                  <span className="font-semibold text-white">Data Science</span>, and{" "}
+                  <span className="font-semibold text-white">Marketing</span>.
+                  Build portfolio projects, get real feedback, and ship with confidence.
+                </motion.p>
+
+                {/* CTA Buttons */}
+                <motion.div
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="mt-8 flex flex-wrap items-center gap-4"
+                >
+                  <Link
+                    href="/contact-us"
+                    className="group inline-flex items-center justify-center gap-2 rounded-full px-4 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold text-base shadow-lg shadow-orange-500/25 hover:shadow-xl hover:shadow-orange-500/35 hover:-translate-y-0.5 transition-all duration-300"
+                  >
+                    <span>Start Succeeding</span>
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+
+                  <Link
+                    href="#all-reviews"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/20 bg-white/5 backdrop-blur-sm px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300"
+                  >
+                    Read Student Stories
+                  </Link>
+                </motion.div>
+
+                {/* Trust Indicator */}
+                <motion.div
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="mt-6 flex items-center gap-4"
+                >
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-5 w-5 text-amber-400 fill-current" />
+                    ))}
+                  </div>
+                  <span className="text-sm text-slate-400">
+                    <span className="font-semibold text-white">4.9/5</span> average rating · Alumni at leading companies
+                  </span>
+                </motion.div>
               </div>
 
-              <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight text-neutral-900">
-                Ready to turn practice into <span className="text-[var(--color-brand)]">offers</span>?
-              </h2>
-
-              <p className="mt-2 max-w-2xl text-[15px] sm:text-base text-neutral-700">
-                Join our hands-on programs in <span className="font-medium text-neutral-900">Testing</span>,{" "}
-                <span className="font-medium text-neutral-900">Data</span>, and{" "}
-                <span className="font-medium text-neutral-900">Marketing</span>. Build portfolio projects, get real feedback, and ship with confidence.
-              </p>
-
-              <div className="mt-4 sm:mt-5 lg:mt-6 flex flex-wrap items-center gap-3">
-                <Link
-                  href="/contact-us"
-                  className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm sm:px-6 sm:py-3 sm:text-sm lg:px-7 lg:py-4 lg:text-sm bg-[var(--color-brand)] text-white font-semibold shadow-sm transition hover:-translate-y-[1px] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)]/40"
-                >
-                  Join 1000+ Successful Students
-                </Link>
-
-                <Link
-                  href="#all-reviews"
-                  className="inline-flex items-center justify-center rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm sm:px-5 sm:py-3 sm:text-sm lg:px-6 lg:py-3.5 lg:text-sm font-semibold text-neutral-900 transition hover:-translate-y-[1px] hover:shadow-sm"
-                >
-                  Read student stories
-                </Link>
-              </div>
-
-              <div className="mt-3 sm:mt-4 flex items-center gap-3 text-xs text-neutral-600">
-                <div className="flex items-center">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-brand)]" fill="currentColor" />
-                  ))}
+              {/* Right Stats Grid */}
+              <motion.div
+                className="lg:col-span-5"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+              >
+                <div className="grid grid-cols-2 gap-4">
+                  <StatCard
+                    icon={Users}
+                    kpi="500+"
+                    label="Alumni Placed"
+                    gradient="from-orange-500 to-amber-500"
+                  />
+                  <StatCard
+                    icon={Target}
+                    kpi="94%"
+                    label="Job-Ready Projects"
+                    gradient="from-blue-500 to-cyan-500"
+                  />
+                  <StatCard
+                    icon={Clock}
+                    kpi="6-12w"
+                    label="To First Offer"
+                    gradient="from-emerald-500 to-teal-500"
+                  />
+                  <StatCard
+                    icon={Award}
+                    kpi="1:1"
+                    label="Mentor Reviews"
+                    gradient="from-violet-500 to-purple-500"
+                  />
                 </div>
-                <span>4.8/5 average rating · Alumni at leading teams</span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-5">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                <StatCard kpi="500+" label="alumni placed" tone="orange" />
-                <StatCard kpi="94%" label="job-ready projects" tone="sky" />
-                <StatCard kpi="6–12w" label="to first offer" tone="emerald" />
-                <StatCard kpi="1:1" label="mentor reviews" tone="violet" />
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -69,101 +181,44 @@ export default function CTAJoinSection() {
   );
 }
 
-/** ---------- Pretty, blended numeric cards ---------- **/
-
-type ToneKey = "orange" | "sky" | "emerald" | "violet";
-
-const NOISE: string =
-  "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" opacity=\"0.08\" width=\"80\" height=\"80\" viewBox=\"0 0 80 80\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.9\" numOctaves=\"2\" stitchTiles=\"stitch\"/></filter><rect width=\"100%\" height=\"100%\" filter=\"url(%23n)\"/></svg>')";
-
-const TONES: Record<
-  ToneKey,
-  { border: string; number: string; style: CSSProperties }
-> = {
-  orange: {
-    border: "border-orange-200",
-    number: "text-orange-600",
-    style: {
-      backgroundImage: [
-        // conic sweep highlight (peach → orange)
-        "conic-gradient(from 220deg at 25% 0%, rgba(255,212,170,0.65), rgba(255,166,77,0.35) 35%, rgba(255,212,170,0.65) 65%, rgba(255,166,77,0.35))",
-        // corner glow
-        "radial-gradient(100% 90% at 100% 0%, rgba(255,176,102,0.42) 0%, rgba(255,176,102,0) 60%)",
-        // texture
-        NOISE,
-      ].join(","),
-      backgroundBlendMode: "screen, soft-light, multiply",
-    },
-  },
-  sky: {
-    border: "border-sky-200",
-    number: "text-sky-600",
-    style: {
-      backgroundImage: [
-        "conic-gradient(from 210deg at 25% 0%, rgba(186,230,253,0.65), rgba(125,211,252,0.35) 35%, rgba(186,230,253,0.65) 65%, rgba(125,211,252,0.35))",
-        "radial-gradient(100% 90% at 100% 0%, rgba(148,216,255,0.42) 0%, rgba(148,216,255,0) 60%)",
-        NOISE,
-      ].join(","),
-      backgroundBlendMode: "screen, soft-light, multiply",
-    },
-  },
-  emerald: {
-    border: "border-emerald-200",
-    number: "text-emerald-600",
-    style: {
-      backgroundImage: [
-        "conic-gradient(from 225deg at 25% 0%, rgba(187,247,208,0.65), rgba(134,239,172,0.35) 35%, rgba(187,247,208,0.65) 65%, rgba(134,239,172,0.35))",
-        "radial-gradient(100% 90% at 100% 0%, rgba(160,240,195,0.42) 0%, rgba(160,240,195,0) 60%)",
-        NOISE,
-      ].join(","),
-      backgroundBlendMode: "screen, soft-light, multiply",
-    },
-  },
-  violet: {
-    border: "border-violet-200",
-    number: "text-violet-600",
-    style: {
-      backgroundImage: [
-        "conic-gradient(from 200deg at 25% 0%, rgba(221,214,254,0.68), rgba(196,181,253,0.38) 35%, rgba(221,214,254,0.68) 65%, rgba(196,181,253,0.38))",
-        "radial-gradient(100% 90% at 100% 0%, rgba(210,200,255,0.45) 0%, rgba(210,200,255,0) 60%)",
-        NOISE,
-      ].join(","),
-      backgroundBlendMode: "screen, soft-light, multiply",
-    },
-  },
-};
+/* ---------- Stat Card Component ---------- */
+import type { LucideIcon } from "lucide-react";
 
 function StatCard({
+  icon: Icon,
   kpi,
   label,
-  tone = "orange",
+  gradient,
 }: {
+  icon: LucideIcon;
   kpi: string;
   label: string;
-  tone?: ToneKey;
+  gradient: string;
 }) {
-  const cfg = TONES[tone];
-
   return (
-    <div
-      className={`relative rounded-2xl border ${cfg.border} p-3 sm:p-4 text-center shadow-[0_10px_30px_-20px_rgba(0,0,0,.35)] overflow-hidden bg-white`}
-      style={cfg.style}
+    <motion.div
+      whileHover={{ scale: 1.03, y: -3 }}
+      className="relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-5 text-center group hover:bg-white/10 transition-all duration-300"
     >
-      {/* subtle sheen arc */}
+      {/* Gradient glow on hover */}
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-2xl"
-        style={{
-          background:
-            "conic-gradient(from 140deg at 0% 0%, rgba(255,255,255,0.6), transparent 20%, transparent 80%, rgba(255,255,255,0.35))",
-          opacity: 0.22,
-          WebkitMask:
-            "radial-gradient(120% 80% at 0% 0%, black 45%, transparent 70%)",
-          mask: "radial-gradient(120% 80% at 0% 0%, black 45%, transparent 70%)",
-        }}
+        className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
       />
-      <div className={`text-xl font-extrabold ${cfg.number}`}>{kpi}</div>
-      <div className="mt-1 text-xs font-medium text-neutral-700">{label}</div>
-    </div>
+
+      {/* Icon */}
+      <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} mb-3`}>
+        <Icon className="h-5 w-5 text-white" />
+      </div>
+
+      {/* KPI */}
+      <div className="text-2xl sm:text-3xl font-extrabold text-white mb-1">
+        {kpi}
+      </div>
+
+      {/* Label */}
+      <div className="text-xs sm:text-sm font-medium text-slate-400">
+        {label}
+      </div>
+    </motion.div>
   );
 }

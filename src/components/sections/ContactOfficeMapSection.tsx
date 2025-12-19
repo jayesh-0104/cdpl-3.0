@@ -23,7 +23,7 @@ const OFFICES: Office[] = [
     id: "mumbai",
     label: "Mumbai",
     headOffice:
-      "Office Number 2 & 3, 2nd Floor, Ashley Towers, Kanakia Rd, Vagad Nagar, Beverly Park, Mira Road East, Mira Bhayandar, Mumbai, Maharashtra - 401107",
+      "Office #1, 2nd Floor, Ashley Tower, Kanakia Road, Vagad Nagar, Beverly Park, Mira Road, Mira Bhayandar, Mumbai, Maharashtra 401107",
     studyCenter:
       "Shop No 7, Laxmi Palace, Opposite Vidhyavardhini Degree Engineering College, Gurunanak Nagar, Vasai West, Mumbai, Maharashtra - 401202",
     phone: "tel:+918488988984",

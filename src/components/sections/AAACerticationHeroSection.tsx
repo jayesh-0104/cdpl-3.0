@@ -4,9 +4,33 @@ import Link from "next/link";
 import Image from "next/image";
 import { Home } from "lucide-react";
 
+
+import { useState } from "react";
+import { AAAVerificationChoiceModal } from "../ui/AAAVerificationChoiceModal";
+import { useRouter } from "next/navigation";
+
 export default function AAACerticationHeroSection() {
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+
+  const handleOfficial = () => {
+    window.open("https://aaa-accreditation.org/adcp/", "_blank");
+    setShowModal(false);
+  };
+
+  const handleCdpl = () => {
+    router.push("/cdpl-certificate-validation");
+    setShowModal(false);
+  };
+
   return (
     <section className="relative isolate overflow-hidden bg-white text-slate-900">
+      <AAAVerificationChoiceModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onOfficialVerify={handleOfficial}
+        onCdplVerify={handleCdpl}
+      />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-50 to-white" />
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}
@@ -44,12 +68,13 @@ export default function AAACerticationHeroSection() {
               >
                 View curriculum
               </Link>
-              <Link
-                href="/cdpl-certificate-validation"
+              <button
+                type="button"
+                onClick={() => setShowModal(true)}
                 className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 ring-1 ring-slate-200 transition hover:bg-slate-50"
               >
                 Validate a certificate
-              </Link>
+              </button>
             </div>
           </div>
 

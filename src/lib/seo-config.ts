@@ -54,7 +54,7 @@ export const BUSINESS_INFO = {
 
   // Physical Address
   address: {
-    streetAddress: 'Office Number 2 & 3, 2nd Floor, Ashley Towers, Kanakia Rd, Vagad Nagar, Beverly Park, Mira Road East',
+    streetAddress: 'Office #1, 2nd Floor, Ashley Tower, Kanakia Road, Vagad Nagar, Beverly Park, Mira Road',
     addressLocality: 'Mira Bhayandar, Mumbai',
     addressRegion: 'Maharashtra',
     postalCode: '401107',

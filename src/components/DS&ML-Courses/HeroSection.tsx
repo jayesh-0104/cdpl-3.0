@@ -321,6 +321,7 @@ export default function HeroSection(): React.JSX.Element {
                                 title="Start Your Free Demo"
                                 subtitle="Chat with an expert advisor"
                                 showCourse={false}
+                                source="Data Science - Hero Section - Mobile Form"
                             />
                         </div>
                     </div>
@@ -351,6 +352,7 @@ export default function HeroSection(): React.JSX.Element {
                                         title="Start Your Free Demo"
                                         subtitle="Chat with an expert advisor & unlock a personalised learning plan"
                                         showCourse={false}
+                                        source="Data Science - Hero Section - Right Form"
                                     />
                                 </div>
                             </motion.div>

@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import RegistrationForm from '@/components/istqb-registration/RegistrationForm';
 import BookingOption from '@/components/istqb-registration/BookingOption';
 import ExamSelection from '@/components/istqb-registration/ExamSelection';
 import SuccessState from '@/components/istqb-registration/SuccessState';
-import { CheckCircle2, Home, ChevronRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, Home, ChevronRight, ArrowLeft, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import WhyIstqbSection from '@/components/istqb-registration/WhyIstqbSection';
 import IstqbOverview from '@/components/istqb-registration/IstqbOverview';
@@ -17,6 +17,15 @@ export default function IstqbRegistrationPage() {
     const [choice, setChoice] = useState<'none' | 'booking' | 'exam'>('none');
     const [isBookingComplete, setIsBookingComplete] = useState(false);
     const [userData, setUserData] = useState<any>(null);
+    const [meetingTimeLabel, setMeetingTimeLabel] = useState('Loading...');
+
+    useEffect(() => {
+        const now = new Date();
+        const cutoff = new Date();
+        cutoff.setHours(15, 30, 0, 0); // 3:30 PM local client time
+        const isToday = now < cutoff;
+        setMeetingTimeLabel(isToday ? 'Today at 3:30 PM' : 'Tomorrow at 3:30 PM');
+    }, []);
 
     // Handlers
     const handleStep1Success = (data: any) => {
@@ -116,14 +125,14 @@ export default function IstqbRegistrationPage() {
                                         </button>
 
                                         <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-600 rounded-full mb-6 mx-auto md:mx-0 mt-8">
-                                            <CheckCircle2 className="w-8 h-8" />
+                                            <Calendar className="w-8 h-8" />
                                         </div>
 
                                         <h2 className="text-3xl font-bold text-slate-900 mb-4">
-                                            Thank you for your interest in ISTQB certification!
+                                            Book a Free Consultation
                                         </h2>
                                         <p className="text-lg text-slate-600 mb-8 max-w-2xl">
-                                            To ensure you have all the details you need, we’d love to connect with you.
+                                            Thank you for your interest in ISTQB certification! To ensure you have all the details you need, we&rsquo;d love to connect with you.
                                         </p>
 
                                         <div className="bg-slate-50 rounded-2xl p-6 md:p-8 mb-8 border border-slate-200">
@@ -146,11 +155,7 @@ export default function IstqbRegistrationPage() {
 
                                             <div className="flex items-center gap-2 text-indigo-700 bg-indigo-50 px-4 py-2 rounded-lg inline-block font-medium">
                                                 <span>🕒 Meeting Time:</span>
-                                                <span>
-                                                    {new Date() < new Date(new Date().setHours(15, 30, 0, 0))
-                                                        ? `Today at 3:30 PM`
-                                                        : `Tomorrow at 3:30 PM`}
-                                                </span>
+                                                <span>{meetingTimeLabel}</span>
                                             </div>
                                         </div>
 
@@ -174,7 +179,7 @@ export default function IstqbRegistrationPage() {
                                                 onClick={() => setChoice('exam')}
                                                 className={`w-full sm:flex-1 ${!isBookingComplete ? 'bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700' : 'bg-slate-900 text-white hover:bg-slate-800 shadow-xl'} font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2`}
                                             >
-                                                Skip & Book Exam
+                                                {isBookingComplete ? 'Choose Exam Date' : 'Skip Book a Meeting'}
                                                 {isBookingComplete && <ChevronRight className="w-5 h-5" />}
                                             </button>
                                         </div>
